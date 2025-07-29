@@ -5,7 +5,7 @@ import React, { useEffect, useRef, ReactNode, useState } from "react";
 // Type declarations for Vanta and Three.js
 declare global {
   interface Window {
-    THREE?: any;
+    THREE?: unknown;
     VANTA?: {
       FOG: (options: VantaFogOptions) => VantaEffect;
     };
@@ -44,8 +44,16 @@ const VantaFog: React.FC<VantaFogProps> = ({
   const vantaRef = useRef<HTMLDivElement>(null);
   const vantaEffect = useRef<VantaEffect | null>(null);
   const isInitialized = useRef(false);
+  const [isClient, setIsClient] = useState(false);
+
+  // Fix hydration by ensuring client-side only rendering
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
+    if (!isClient) return;
+
     const initVanta = (): void => {
       if (
         window.VANTA &&
@@ -131,7 +139,39 @@ const VantaFog: React.FC<VantaFogProps> = ({
       }
       isInitialized.current = false;
     };
-  }, []);
+  }, [isClient]);
+
+  // Show loading or fallback during SSR
+  if (!isClient) {
+    return (
+      <div
+        className={`vanta-fog-container ${className}`}
+        style={{
+          position: "relative",
+          minHeight: "200px",
+          minWidth: "200px",
+          overflow: "hidden",
+          backgroundColor: "#000000",
+          ...style,
+        }}
+      >
+        {children}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "200px",
+            background:
+              "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.9) 70%, #000000 100%)",
+            pointerEvents: "none",
+            zIndex: 2,
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -167,8 +207,15 @@ const VantaFog: React.FC<VantaFogProps> = ({
 const CustomCursor: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
     const updateMousePosition = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
@@ -195,7 +242,11 @@ const CustomCursor: React.FC = () => {
         el.removeEventListener("mouseleave", handleMouseLeave);
       });
     };
-  }, []);
+  }, [isClient]);
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <>

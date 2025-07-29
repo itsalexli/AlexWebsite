@@ -1,7 +1,7 @@
 import React from "react";
 import VantaFog from "./VantaFog";
 import Info from "./info";
-import ProjectsShowcase from "./projects";
+
 const HomePage: React.FC = () => {
   return (
     <div>
@@ -9,7 +9,6 @@ const HomePage: React.FC = () => {
       <div>
         <Info />
       </div>
-      {/* <ProjectsShowcase /> */}
     </div>
   );
 };

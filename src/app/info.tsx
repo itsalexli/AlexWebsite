@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
+import Image from "next/image";
 
 export default function Info() {
   const [messages, setMessages] = useState([
@@ -53,7 +54,7 @@ export default function Info() {
         "Mobile engineering building automated money feature scaled for $6B+ in transaction volume (piloting for 2027).",
       date: "May 2025 - August 2025",
       location: "Remote",
-      logo: "cibc.png",
+      logo: "/cibc.png",
     },
     {
       company: "Autumn",
@@ -62,7 +63,7 @@ export default function Info() {
         "Fullstack engineering building RAG pipeline and scraper application using Typescript and Python for 1,200+ users.",
       date: "January 2025 - April 2025",
       location: "Toronto, Canada",
-      logo: "autumn.png",
+      logo: "/autumn.png",
     },
     {
       company: "WAI",
@@ -71,11 +72,9 @@ export default function Info() {
         "Designed and built university events landing pages with ReactJS, NodeJS, and MongoDB for 500+ users",
       date: "September 2024 - December 2024",
       location: "Toronto, Canada",
-      logo: "wta.png",
+      logo: "/wta.png",
     },
   ];
-
-  // Removed auto-scroll functionality
 
   // Style constants for windows
   const getWindowStyle = (windowType: string) => ({
@@ -252,12 +251,13 @@ export default function Info() {
                   {message.isTyping ? (
                     <TypingIndicator />
                   ) : Array.isArray(message.text) ? (
-                    message.text.map((paragraph, pIndex) => (
+                    (message.text as string[]).map((paragraph, pIndex) => (
                       <p
                         key={pIndex}
                         style={{
                           margin: pIndex === 0 ? "0 0 15px 0" : "15px 0",
-                          ...(pIndex === message.text.length - 1 && {
+                          ...(pIndex ===
+                            (message.text as string[]).length - 1 && {
                             marginBottom: 0,
                           }),
                         }}
@@ -425,12 +425,12 @@ export default function Info() {
                         flexShrink: 0,
                       }}
                     >
-                      <img
+                      <Image
                         src={exp.logo}
                         alt={`${exp.company} logo`}
+                        width={52}
+                        height={52}
                         style={{
-                          width: "100%",
-                          height: "100%",
                           objectFit: "contain",
                           padding: "8px",
                         }}
