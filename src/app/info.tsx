@@ -3,8 +3,14 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 
+interface Message {
+  text: string | string[];
+  sender: string;
+  isTyping?: boolean;
+}
+
 export default function Info() {
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       text: "Click the button below to learn more about me!",
       sender: "bot",
@@ -251,13 +257,12 @@ export default function Info() {
                   {message.isTyping ? (
                     <TypingIndicator />
                   ) : Array.isArray(message.text) ? (
-                    (message.text as string[]).map((paragraph, pIndex) => (
+                    message.text.map((paragraph, pIndex) => (
                       <p
                         key={pIndex}
                         style={{
                           margin: pIndex === 0 ? "0 0 15px 0" : "15px 0",
-                          ...(pIndex ===
-                            (message.text as string[]).length - 1 && {
+                          ...(pIndex === message.text.length - 1 && {
                             marginBottom: 0,
                           }),
                         }}
