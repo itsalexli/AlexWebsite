@@ -9,6 +9,7 @@ export default function Info() {
   );
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isClient, setIsClient] = useState(false);
+  const [logoVisible, setLogoVisible] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -21,16 +22,27 @@ export default function Info() {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
-    document.addEventListener("mousemove", updateMousePosition);
+    // Use requestAnimationFrame for smoother updates
+    let rafId: number;
+    const smoothUpdateMousePosition = (e: MouseEvent) => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+      });
+    };
+
+    document.addEventListener("mousemove", smoothUpdateMousePosition);
 
     return () => {
-      document.removeEventListener("mousemove", updateMousePosition);
+      document.removeEventListener("mousemove", smoothUpdateMousePosition);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, [isClient]);
 
   const handleExperienceEnter = (index: number) => {
     setHoveredExperience(index);
-    // Dispatch event to hide custom cursor
+    setLogoVisible(true); // Show immediately
+    // Dispatch event to start custom cursor transition
     document.dispatchEvent(
       new CustomEvent("experienceHover", {
         detail: { isHovering: true },
@@ -39,6 +51,7 @@ export default function Info() {
   };
 
   const handleExperienceLeave = () => {
+    setLogoVisible(false);
     setHoveredExperience(null);
     // Dispatch event to show custom cursor
     document.dispatchEvent(
@@ -85,18 +98,18 @@ export default function Info() {
       }}
     >
       {/* Company Logo Cursor - Only shows when hovering over experience cards */}
-      {isClient && hoveredExperience !== null && (
+      {isClient && hoveredExperience !== null && logoVisible && (
         <div
           style={{
             position: "fixed",
-            left: mousePosition.x + 15,
-            top: mousePosition.y + 15,
+            left: mousePosition.x - 45, // Center the 50px wide cursor
+            top: mousePosition.y - 35, // Center the 50px tall cursor
             width: "50px",
             height: "50px",
             pointerEvents: "none",
             zIndex: 9999,
-            backgroundColor: "white",
-            borderRadius: "8px",
+            backgroundColor: "#333333",
+            borderRadius: "50%",
             border: "2px solid #7b9bff",
             display: "flex",
             alignItems: "center",

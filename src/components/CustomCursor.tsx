@@ -7,6 +7,7 @@ const CustomCursor: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [isHoveringExperience, setIsHoveringExperience] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -15,15 +16,26 @@ const CustomCursor: React.FC = () => {
   useEffect(() => {
     if (!isClient) return;
 
+    // Use requestAnimationFrame for smoother mouse tracking
+    let rafId: number;
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+      });
     };
 
     const handleMouseEnter = () => setIsHovering(true);
     const handleMouseLeave = () => setIsHovering(false);
 
     const handleExperienceHover = (e: CustomEvent) => {
-      setIsHoveringExperience(e.detail.isHovering);
+      if (e.detail.isHovering) {
+        setIsHoveringExperience(true);
+        setIsTransitioning(true);
+      } else {
+        setIsHoveringExperience(false);
+        setIsTransitioning(false);
+      }
     };
 
     document.addEventListener("mousemove", updateMousePosition);
@@ -47,6 +59,7 @@ const CustomCursor: React.FC = () => {
         "experienceHover",
         handleExperienceHover as EventListener
       );
+      if (rafId) cancelAnimationFrame(rafId);
       interactiveElements.forEach((el) => {
         el.removeEventListener("mouseenter", handleMouseEnter);
         el.removeEventListener("mouseleave", handleMouseLeave);
@@ -58,29 +71,43 @@ const CustomCursor: React.FC = () => {
     return null;
   }
 
+  // Calculate size based on transition state
+  const baseSize = isHovering ? 60 : 20;
+  const targetSize = isTransitioning ? 50 : baseSize;
+  const width = isHovering && !isTransitioning ? "60px" : `${targetSize}px`;
+  const height = isHovering && !isTransitioning ? "30px" : `${targetSize}px`;
+
   return (
     <div
       style={{
         position: "fixed",
-        left: isHovering ? mousePosition.x - 30 : mousePosition.x - 10,
-        top: isHovering ? mousePosition.y - 15 : mousePosition.y - 10,
-        width: isHovering ? "60px" : "20px",
-        height: isHovering ? "30px" : "20px",
-        backgroundColor: isHovering ? "#7b9bff" : "transparent",
-        border: isHovering ? "none" : "2px solid #7b9bff",
-        borderRadius: isHovering ? "15px" : "50%",
+        left:
+          isHovering && !isTransitioning
+            ? mousePosition.x - 30
+            : mousePosition.x - targetSize / 2,
+        top:
+          isHovering && !isTransitioning
+            ? mousePosition.y - 15
+            : mousePosition.y - targetSize / 2,
+        width: width,
+        height: height,
+        backgroundColor:
+          isHovering && !isTransitioning ? "#7b9bff" : "transparent",
+        border: isHovering && !isTransitioning ? "none" : "2px solid #7b9bff",
+        borderRadius: isHovering && !isTransitioning ? "15px" : "50%",
         pointerEvents: "none",
         zIndex: 9999,
-        transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        transform: "translate3d(0, 0, 0)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         fontSize: "12px",
         color: "white",
         fontWeight: "500",
+        opacity: isTransitioning ? 0 : 1,
       }}
     >
-      {isHovering && "CLICK"}
+      {isHovering && !isTransitioning && "CLICK"}
     </div>
   );
 };
