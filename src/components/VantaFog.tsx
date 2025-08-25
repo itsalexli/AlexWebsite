@@ -76,11 +76,12 @@ const VantaFog: React.FC<VantaFogProps> = ({
             minHeight: 200.0,
             minWidth: 200.0,
             highlightColor: 0xffffff,
-            midtoneColor: 0x7b9bff,
-            lowlightColor: 0xffffff,
+            midtoneColor: 0xb3c4ff,
+            lowlightColor: 0x618fff,
             baseColor: 0xffffff,
-            speed: 3.7,
-            zoom: 0.4,
+            blurFactor: 0.35,
+            speed: 1.0,
+            zoom: 0.7,
           });
 
           isInitialized.current = true;

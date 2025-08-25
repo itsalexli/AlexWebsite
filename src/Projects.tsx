@@ -13,7 +13,7 @@ export default function Projects() {
       year: "2025",
       description:
         "Open-source background coding agent and interface (1000+ stars)",
-      image: "/project1.jpg", // You'll need to add these images
+      image: "/agely.png", // Using available images
       link: "/projects/shadow",
     },
     {
@@ -21,7 +21,7 @@ export default function Projects() {
       title: "Vercel",
       year: "2025",
       description: "Building v0, the full-stack vibe coding platform",
-      image: "/project2.jpg",
+      image: "/cibc.png",
       link: "/projects/vercel",
     },
     {
@@ -29,7 +29,7 @@ export default function Projects() {
       title: "Health Analytics",
       year: "2024",
       description: "AI-powered health data visualization and insights platform",
-      image: "/project3.jpg",
+      image: "/autumn.png",
       link: "/projects/health-analytics",
     },
     {
@@ -37,25 +37,8 @@ export default function Projects() {
       title: "Music Visualizer",
       year: "2024",
       description: "Real-time audio visualization with WebGL and Three.js",
-      image: "/project4.jpg",
+      image: "/wta.png",
       link: "/projects/music-visualizer",
-    },
-    {
-      id: 5,
-      title: "Task Manager",
-      year: "2023",
-      description: "Collaborative project management with real-time updates",
-      image: "/project5.jpg",
-      link: "/projects/task-manager",
-    },
-    {
-      id: 6,
-      title: "Portfolio Site",
-      year: "2023",
-      description:
-        "Interactive portfolio with dynamic animations and fog effects",
-      image: "/project6.jpg",
-      link: "/projects/portfolio",
     },
   ];
 
@@ -63,7 +46,7 @@ export default function Projects() {
     <div
       style={{
         padding: "60px 40px",
-        maxWidth: "1400px",
+        maxWidth: "1200px",
         margin: "0 auto",
         fontFamily: "system-ui, -apple-system, sans-serif",
       }}
@@ -73,9 +56,7 @@ export default function Projects() {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
-          gridTemplateRows: "repeat(3, 1fr)",
-          gap: "40px",
-          height: "1200px",
+          gap: "30px",
         }}
       >
         {projects.map((project, index) => (
@@ -84,70 +65,64 @@ export default function Projects() {
             onMouseEnter={() => setHoveredProject(index)}
             onMouseLeave={() => setHoveredProject(null)}
             onClick={() => {
-              // Will navigate to project page when implemented
               console.log(`Navigate to ${project.link}`);
             }}
             style={{
-              position: "relative",
-              backgroundColor: "rgba(26, 26, 26, 0.8)",
+              backgroundColor: "white",
+              borderRadius: "16px",
               overflow: "hidden",
               cursor: "pointer",
               transition: "all 0.3s ease",
               transform:
-                hoveredProject === index ? "translateY(-5px)" : "translateY(0)",
+                hoveredProject === index
+                  ? "translateY(-8px) scale(1.02)"
+                  : "translateY(0) scale(1)",
               boxShadow:
                 hoveredProject === index
-                  ? "0 20px 40px rgba(0, 0, 0, 0.3)"
-                  : "0 5px 15px rgba(0, 0, 0, 0.2)",
-              backdropFilter: "blur(10px)",
-              border: "1px solid rgba(255, 255, 255, 0.1)",
+                  ? "0 20px 40px rgba(0, 0, 0, 0.15)"
+                  : "0 4px 20px rgba(0, 0, 0, 0.08)",
+              border: "1px solid rgba(0, 0, 0, 0.05)",
             }}
           >
-            {/* Project Image/Background */}
+            {/* Project Image */}
             <div
               style={{
                 width: "100%",
-                height: "60%",
-                backgroundColor: "rgba(42, 42, 42, 0.6)",
-                backgroundImage: `linear-gradient(135deg, rgba(42, 42, 42, 0.6) 0%, rgba(26, 26, 26, 0.6) 100%)`,
+                height: "240px",
+                backgroundColor: "#f8f9fa",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 position: "relative",
+                overflow: "hidden",
               }}
             >
-              {/* Placeholder for actual project image */}
-              <div
+              <Image
+                src={project.image}
+                alt={project.title}
+                width={120}
+                height={120}
                 style={{
-                  width: "80%",
-                  height: "80%",
-                  backgroundColor: "#3a3a3a",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  objectFit: "contain",
+                  transition: "transform 0.3s ease",
+                  transform:
+                    hoveredProject === index ? "scale(1.1)" : "scale(1)",
                 }}
-              >
-                <div
-                  style={{
-                    width: "60px",
-                    height: "60px",
-                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                  }}
-                />
-              </div>
+              />
 
               {/* Year badge */}
               <div
                 style={{
                   position: "absolute",
-                  top: "15px",
-                  right: "15px",
-                  backgroundColor: "rgba(0, 0, 0, 0.7)",
+                  top: "16px",
+                  right: "16px",
+                  backgroundColor: "rgba(0, 0, 0, 0.8)",
                   color: "white",
-                  padding: "4px 8px",
-                  borderRadius: "4px",
-                  fontSize: "0.8rem",
-                  fontWeight: "500",
+                  padding: "6px 12px",
+                  borderRadius: "20px",
+                  fontSize: "0.75rem",
+                  fontWeight: "600",
+                  letterSpacing: "0.5px",
                 }}
               >
                 {project.year}
@@ -157,69 +132,79 @@ export default function Projects() {
             {/* Project Info */}
             <div
               style={{
-                padding: "20px",
-                height: "40%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
+                padding: "24px",
               }}
             >
-              <div>
-                <h3
-                  style={{
-                    color: "white",
-                    fontSize: "1.2rem",
-                    fontWeight: "600",
-                    marginBottom: "8px",
-                    letterSpacing: "-0.01em",
-                  }}
-                >
-                  {project.title}
-                </h3>
-                <p
-                  style={{
-                    color: "rgba(255, 255, 255, 0.7)",
-                    fontSize: "0.9rem",
-                    lineHeight: "1.4",
-                  }}
-                >
-                  {project.description}
-                </p>
-              </div>
+              <h3
+                style={{
+                  color: "#1a1a1a",
+                  fontSize: "1.25rem",
+                  fontWeight: "700",
+                  marginBottom: "8px",
+                  letterSpacing: "-0.02em",
+                  lineHeight: "1.3",
+                }}
+              >
+                {project.title}
+              </h3>
+              <p
+                style={{
+                  color: "#666666",
+                  fontSize: "0.95rem",
+                  lineHeight: "1.5",
+                  marginBottom: "20px",
+                }}
+              >
+                {project.description}
+              </p>
 
-              {/* Hover indicator */}
+              {/* Call to action */}
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  marginTop: "10px",
                 }}
               >
                 <span
                   style={{
-                    color: "rgba(255, 255, 255, 0.5)",
-                    fontSize: "0.8rem",
+                    color: hoveredProject === index ? "#007AFF" : "#999999",
+                    fontSize: "0.9rem",
+                    fontWeight: "600",
+                    transition: "color 0.3s ease",
                   }}
                 >
                   View Project
                 </span>
                 <div
                   style={{
-                    width: "20px",
-                    height: "20px",
+                    width: "32px",
+                    height: "32px",
                     borderRadius: "50%",
                     backgroundColor:
                       hoveredProject === index
-                        ? "rgba(255, 255, 255, 0.2)"
-                        : "rgba(255, 255, 255, 0.1)",
-                    transition: "background-color 0.3s ease",
+                        ? "#007AFF"
+                        : "rgba(0, 0, 0, 0.08)",
+                    transition: "all 0.3s ease",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    transform:
+                      hoveredProject === index
+                        ? "translateX(4px)"
+                        : "translateX(0)",
                   }}
                 >
-                  <span style={{ color: "white", fontSize: "0.7rem" }}>→</span>
+                  <span
+                    style={{
+                      color: hoveredProject === index ? "white" : "#666666",
+                      fontSize: "0.9rem",
+                      fontWeight: "600",
+                      transition: "color 0.3s ease",
+                    }}
+                  >
+                    →
+                  </span>
                 </div>
               </div>
             </div>

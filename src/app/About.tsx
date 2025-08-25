@@ -19,7 +19,25 @@ export default function About() {
             letterSpacing: "-0.02em",
           }}
         >
-          Alex 李{" "}
+          <span
+            style={{
+              position: "relative",
+              display: "inline-block",
+            }}
+          >
+            Alex 李
+            <span
+              style={{
+                position: "absolute",
+                bottom: "12px",
+                left: "8px",
+                right: "-8px",
+                height: "-3px",
+                backgroundColor: "#3b82f6",
+                borderRadius: "2px",
+              }}
+            />
+          </span>{" "}
           <span
             style={{
               color: "#6b7280",
