@@ -73,10 +73,10 @@ const VantaFog: React.FC<VantaFogProps> = ({
             gyroControls: false,
             minHeight: 200.0,
             minWidth: 200.0,
-            highlightColor: 0x1a1a2e,
-            midtoneColor: 0x16213e,
-            lowlightColor: 0x0f0f0f,
-            baseColor: 0x000000,
+            highlightColor: 0xf0f8ff,
+            midtoneColor: 0xddeeff,
+            lowlightColor: 0xb3d9ff,
+            baseColor: 0xe6f2ff,
             blurFactor: 0.5,
           });
 
@@ -151,7 +151,7 @@ const VantaFog: React.FC<VantaFogProps> = ({
           minHeight: "200px",
           minWidth: "200px",
           overflow: "hidden",
-          backgroundColor: "#000000",
+          backgroundColor: "#ffffff",
           ...style,
         }}
       >
@@ -164,7 +164,7 @@ const VantaFog: React.FC<VantaFogProps> = ({
             right: 0,
             height: "200px",
             background:
-              "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.9) 70%, #000000 100%)",
+              "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,0.9) 70%, #ffffff 100%)",
             pointerEvents: "none",
             zIndex: 2,
           }}
@@ -186,7 +186,7 @@ const VantaFog: React.FC<VantaFogProps> = ({
       }}
     >
       {children}
-      {/* Fade to black overlay */}
+      {/* Fade to white overlay */}
       <div
         style={{
           position: "absolute",
@@ -195,7 +195,7 @@ const VantaFog: React.FC<VantaFogProps> = ({
           right: 0,
           height: "200px",
           background:
-            "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.9) 70%, #000000 100%)",
+            "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,0.9) 70%, #ffffff 100%)",
           pointerEvents: "none",
           zIndex: 2,
         }}
@@ -258,7 +258,7 @@ const CustomCursor: React.FC = () => {
           top: mousePosition.y - 4,
           width: "8px",
           height: "8px",
-          backgroundColor: "white",
+          backgroundColor: "black",
           borderRadius: "50%",
           pointerEvents: "none",
           zIndex: 9999,
@@ -276,15 +276,13 @@ const CustomCursor: React.FC = () => {
           top: mousePosition.y - 20,
           width: "40px",
           height: "40px",
-          border: "2px solid rgba(255,255,255,0.3)",
+          border: "2px solid rgba(0,0,0,0.3)",
           borderRadius: "50%",
           pointerEvents: "none",
           zIndex: 9998,
           transition: "transform 0.2s ease, border-color 0.2s ease",
           transform: isHovering ? "scale(1.5)" : "scale(1)",
-          borderColor: isHovering
-            ? "rgba(255,255,255,0.6)"
-            : "rgba(255,255,255,0.3)",
+          borderColor: isHovering ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.3)",
           mixBlendMode: "difference",
         }}
       />
@@ -296,7 +294,7 @@ const NavigationBar: React.FC = () => {
   const navItems = ["work", "play", "blogs"];
 
   const navItemStyle = {
-    color: "white",
+    color: "black",
     textDecoration: "none",
     fontSize: "1rem",
     fontWeight: "500",
@@ -311,7 +309,7 @@ const NavigationBar: React.FC = () => {
   const iconStyle = {
     width: "20px",
     height: "20px",
-    fill: "white",
+    fill: "black",
     transition: "all 0.3s ease",
     cursor: "pointer",
   };
@@ -321,7 +319,7 @@ const NavigationBar: React.FC = () => {
     isHover: boolean
   ) => {
     if (isHover) {
-      e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.15)";
+      e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.15)";
       e.currentTarget.style.backdropFilter = "blur(10px)";
     } else {
       e.currentTarget.style.backgroundColor = "transparent";
@@ -334,12 +332,12 @@ const NavigationBar: React.FC = () => {
     isHover: boolean
   ) => {
     if (isHover) {
-      e.currentTarget.style.stroke = "rgba(255,255,255,0.7)";
-      e.currentTarget.style.fill = "rgba(255,255,255,0.7)";
+      e.currentTarget.style.stroke = "rgba(0,0,0,0.7)";
+      e.currentTarget.style.fill = "rgba(0,0,0,0.7)";
       e.currentTarget.style.transform = "translateY(-2px)";
     } else {
-      e.currentTarget.style.stroke = "white";
-      e.currentTarget.style.fill = "white";
+      e.currentTarget.style.stroke = "black";
+      e.currentTarget.style.fill = "black";
       e.currentTarget.style.transform = "translateY(0)";
     }
   };
@@ -353,9 +351,9 @@ const NavigationBar: React.FC = () => {
         right: 0,
         zIndex: 10,
         padding: "20px 40px",
-        background: "rgba(0,0,0,0.1)",
+        background: "rgba(255,255,255,0.1)",
         backdropFilter: "blur(10px)",
-        borderBottom: "1px solid rgba(255,255,255,0.1)",
+        borderBottom: "1px solid rgba(0,0,0,0.1)",
       }}
     >
       <div
@@ -370,7 +368,7 @@ const NavigationBar: React.FC = () => {
         {/* Logo/Brand */}
         <div
           style={{
-            color: "white",
+            color: "black",
             fontSize: "1.2rem",
             fontWeight: "600",
             letterSpacing: "1px",
@@ -414,7 +412,7 @@ const NavigationBar: React.FC = () => {
               onMouseOver={(e) => handleIconHover(e, true)}
               onMouseOut={(e) => handleIconHover(e, false)}
               viewBox="0 0 24 24"
-              fill="white"
+              fill="black"
             >
               <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
             </svg>
@@ -426,7 +424,7 @@ const NavigationBar: React.FC = () => {
               onMouseOut={(e) => handleIconHover(e, false)}
               viewBox="0 0 24 24"
               fill="none"
-              stroke="white"
+              stroke="black"
               strokeWidth="2"
             >
               <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
@@ -440,7 +438,7 @@ const NavigationBar: React.FC = () => {
               onMouseOver={(e) => handleIconHover(e, true)}
               onMouseOut={(e) => handleIconHover(e, false)}
               viewBox="0 0 24 24"
-              fill="white"
+              fill="black"
             >
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
             </svg>
@@ -452,7 +450,7 @@ const NavigationBar: React.FC = () => {
               onMouseOut={(e) => handleIconHover(e, false)}
               viewBox="0 0 24 24"
               fill="none"
-              stroke="white"
+              stroke="black"
               strokeWidth="2"
             >
               <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
@@ -469,12 +467,12 @@ const Portfolio: React.FC = () => {
     padding: "12px 30px",
     fontSize: "1.1rem",
     borderRadius: "8px",
-    color: "white",
+    color: "black",
     cursor: "pointer",
     backdropFilter: "blur(10px)",
     transition: "all 0.3s ease",
     fontWeight: "500",
-    border: "2px solid rgba(255,255,255,0.3)",
+    border: "2px solid rgba(0,0,0,0.3)",
   };
 
   const handleButtonHover = (
@@ -482,18 +480,18 @@ const Portfolio: React.FC = () => {
     isHover: boolean
   ) => {
     if (isHover) {
-      e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.3)";
+      e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.3)";
       e.currentTarget.style.transform = "translateY(-2px)";
-      e.currentTarget.style.boxShadow = "0 8px 25px rgba(255,255,255,0.2)";
+      e.currentTarget.style.boxShadow = "0 8px 25px rgba(0,0,0,0.2)";
     } else {
-      e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.2)";
+      e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.2)";
       e.currentTarget.style.transform = "translateY(0)";
       e.currentTarget.style.boxShadow = "none";
     }
   };
 
   return (
-    <div style={{ backgroundColor: "#000000", cursor: "none" }}>
+    <div style={{ backgroundColor: "#ffffff", cursor: "none" }}>
       {/* Custom Cursor */}
       <CustomCursor />
 
@@ -509,7 +507,7 @@ const Portfolio: React.FC = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            color: "white",
+            color: "black",
             position: "relative",
             zIndex: 3,
             textAlign: "center",
@@ -521,7 +519,7 @@ const Portfolio: React.FC = () => {
               fontSize: "clamp(2rem, 5vw, 3.5rem)",
               fontWeight: "bold",
               marginBottom: "1rem",
-              textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
+              textShadow: "2px 2px 4px rgba(255,255,255,0.5)",
               maxWidth: "800px",
               lineHeight: "1.2",
             }}
@@ -550,7 +548,7 @@ const Portfolio: React.FC = () => {
             <button
               style={{
                 ...buttonStyle,
-                backgroundColor: "rgba(255,255,255,0.2)",
+                backgroundColor: "rgba(0,0,0,0.2)",
               }}
               onMouseOver={(e) => handleButtonHover(e, true)}
               onMouseOut={(e) => handleButtonHover(e, false)}
@@ -561,13 +559,12 @@ const Portfolio: React.FC = () => {
               style={{
                 ...buttonStyle,
                 backgroundColor: "transparent",
-                border: "2px solid rgba(255,255,255,0.5)",
+                border: "2px solid rgba(0,0,0,0.5)",
               }}
               onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.1)";
+                e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.1)";
                 e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow =
-                  "0 8px 25px rgba(255,255,255,0.1)";
+                e.currentTarget.style.boxShadow = "0 8px 25px rgba(0,0,0,0.1)";
               }}
               onMouseOut={(e) => {
                 e.currentTarget.style.backgroundColor = "transparent";
