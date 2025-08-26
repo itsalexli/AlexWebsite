@@ -14,7 +14,7 @@ export default function About() {
             fontSize: "4rem",
             fontWeight: "600",
             lineHeight: "1.1",
-            color: "#2f314bff",
+            color: "black",
             marginBottom: "10px",
             letterSpacing: "-0.02em",
           }}
@@ -33,14 +33,14 @@ export default function About() {
                 left: "8px",
                 right: "-8px",
                 height: "-3px",
-                backgroundColor: "#3b82f6",
+                backgroundColor: "#1f2937",
                 borderRadius: "2px",
               }}
             />
           </span>{" "}
           <span
             style={{
-              color: "#6b7280",
+              color: "black",
               fontStyle: "italic",
               fontWeight: "400",
             }}
@@ -53,7 +53,7 @@ export default function About() {
           style={{
             fontSize: "1.8rem",
             fontWeight: "500",
-            color: "#3b82f6",
+            color: "#1f2937",
             marginBottom: "20px",
             fontStyle: "italic",
           }}
@@ -63,10 +63,10 @@ export default function About() {
       {/* Definition */}
       <div
         style={{
-          fontSize: "1.4rem",
+          fontSize: "1.3rem",
           fontWeight: "400",
-          lineHeight: "1.6",
-          color: "#2c3e50",
+          lineHeight: "1.3",
+          color: "black",
           fontStyle: "italic",
         }}
       >

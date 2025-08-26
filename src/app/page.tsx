@@ -4,7 +4,6 @@ import React, { useEffect, useRef, ReactNode, useState } from "react";
 import Image from "next/image";
 import VantaFog from "../components/VantaFog";
 import CustomCursor from "../components/CustomCursor";
-import NavigationBar from "../components/NavigationBar";
 import Info from "./info";
 import About from "./About";
 import Projects from "@/Projects";
@@ -38,7 +37,6 @@ const HomePage: React.FC = () => {
 
         <Projects />
       </VantaFog>
-      <NavigationBar />
       <CustomCursor />
     </div>
   );

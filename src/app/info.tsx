@@ -65,14 +65,6 @@ export default function Info() {
       date: "2025",
       logo: "/autumn.png",
     },
-    {
-      company: "WAI",
-      role: "Software Engineer",
-      description:
-        "Designed and built university events landing pages with ReactJS, NodeJS, and MongoDB for 500+ users",
-      date: "2024",
-      logo: "/wta.png",
-    },
   ];
 
   return (
@@ -80,7 +72,7 @@ export default function Info() {
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "15px",
+        gap: "0px",
         fontFamily: "system-ui, -apple-system, sans-serif",
       }}
     >
@@ -95,9 +87,9 @@ export default function Info() {
             height: "50px",
             pointerEvents: "none",
             zIndex: 9999,
-            backgroundColor: "#333333",
+            backgroundColor: "#0f1118ff",
             borderRadius: "50%",
-            border: "2px solid #7b9bff",
+            border: "2px solid #0f1118ff",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -122,7 +114,7 @@ export default function Info() {
           onMouseLeave={() => handleExperienceLeave()}
           style={{
             padding: "12px",
-            borderRadius: "8px",
+            borderRadius: "0px",
             width: "600px",
             border: "1px solid rgba(0, 0, 0, 0.1)",
             display: "flex",
@@ -130,7 +122,7 @@ export default function Info() {
             gap: "12px",
             backgroundColor:
               hoveredExperience === index
-                ? "rgba(176, 196, 255, 0.35)"
+                ? "rgba(128, 128, 128, 0.2)"
                 : "transparent",
             transition: "background-color 0.3s ease",
             cursor: "none",

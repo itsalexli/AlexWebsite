@@ -92,8 +92,8 @@ const CustomCursor: React.FC = () => {
         width: width,
         height: height,
         backgroundColor:
-          isHovering && !isTransitioning ? "#7b9bff" : "transparent",
-        border: isHovering && !isTransitioning ? "none" : "2px solid #7b9bff",
+          isHovering && !isTransitioning ? "#0f1118ff" : "transparent",
+        border: isHovering && !isTransitioning ? "none" : "2px solid #0f1118ff",
         borderRadius: isHovering && !isTransitioning ? "15px" : "50%",
         pointerEvents: "none",
         zIndex: 9999,
