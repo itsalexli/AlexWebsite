@@ -7,6 +7,8 @@ const CustomCursor: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [isHoveringExperience, setIsHoveringExperience] = useState(false);
+  const [isHoveringProject, setIsHoveringProject] = useState(false);
+  const [showProjectText, setShowProjectText] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
@@ -38,10 +40,28 @@ const CustomCursor: React.FC = () => {
       }
     };
 
+    const handleProjectHover = (e: CustomEvent) => {
+      if (e.detail.isHovering) {
+        setIsHoveringProject(true);
+        setShowProjectText(false);
+        // Show text after animation completes (200ms transition)
+        setTimeout(() => {
+          setShowProjectText(true);
+        }, 100);
+      } else {
+        setIsHoveringProject(false);
+        setShowProjectText(false);
+      }
+    };
+
     document.addEventListener("mousemove", updateMousePosition);
     document.addEventListener(
       "experienceHover",
       handleExperienceHover as EventListener
+    );
+    document.addEventListener(
+      "projectHover",
+      handleProjectHover as EventListener
     );
 
     // Track hover states for interactive elements
@@ -59,6 +79,10 @@ const CustomCursor: React.FC = () => {
         "experienceHover",
         handleExperienceHover as EventListener
       );
+      document.removeEventListener(
+        "projectHover",
+        handleProjectHover as EventListener
+      );
       if (rafId) cancelAnimationFrame(rafId);
       interactiveElements.forEach((el) => {
         el.removeEventListener("mouseenter", handleMouseEnter);
@@ -72,10 +96,46 @@ const CustomCursor: React.FC = () => {
   }
 
   // Calculate size based on transition state
-  const baseSize = isHovering ? 60 : 20;
-  const targetSize = isTransitioning ? 50 : baseSize;
-  const width = isHovering && !isTransitioning ? "60px" : `${targetSize}px`;
-  const height = isHovering && !isTransitioning ? "30px" : `${targetSize}px`;
+  const baseSize = isHovering ? 30 : 14;
+  const targetSize = isTransitioning ? 14 : baseSize;
+
+  // Project hover state overrides
+  if (isHoveringProject) {
+    const width = "120px";
+    const height = "40px";
+
+    return (
+      <div
+        style={{
+          position: "fixed",
+          left: mousePosition.x - 60,
+          top: mousePosition.y - 20,
+          width: width,
+          height: height,
+          backgroundColor: "black",
+          border: "none",
+          borderRadius: "0px",
+          pointerEvents: "none",
+          zIndex: 9999,
+          transform: "translate3d(0, 0, 0)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "12px",
+          color: "white",
+          fontWeight: "500",
+          transition: "all 0.2s ease",
+        }}
+      >
+        {showProjectText && "View Projects"}
+      </div>
+    );
+  }
+
+  const width =
+    isHovering && !isTransitioning ? `${baseSize}px` : `${targetSize}px`;
+  const height =
+    isHovering && !isTransitioning ? `${baseSize}px` : `${targetSize}px`;
 
   return (
     <div
@@ -83,18 +143,17 @@ const CustomCursor: React.FC = () => {
         position: "fixed",
         left:
           isHovering && !isTransitioning
-            ? mousePosition.x - 30
+            ? mousePosition.x - baseSize / 2
             : mousePosition.x - targetSize / 2,
         top:
           isHovering && !isTransitioning
-            ? mousePosition.y - 15
+            ? mousePosition.y - baseSize / 2
             : mousePosition.y - targetSize / 2,
         width: width,
         height: height,
-        backgroundColor:
-          isHovering && !isTransitioning ? "#0f1118ff" : "transparent",
-        border: isHovering && !isTransitioning ? "none" : "2px solid #0f1118ff",
-        borderRadius: isHovering && !isTransitioning ? "15px" : "50%",
+        backgroundColor: "#0f1118ff",
+        border: "none",
+        borderRadius: 0,
         pointerEvents: "none",
         zIndex: 9999,
         transform: "translate3d(0, 0, 0)",
@@ -106,9 +165,7 @@ const CustomCursor: React.FC = () => {
         fontWeight: "500",
         opacity: isTransitioning ? 0 : 1,
       }}
-    >
-      {isHovering && !isTransitioning && "CLICK"}
-    </div>
+    ></div>
   );
 };
 

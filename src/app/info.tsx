@@ -88,7 +88,7 @@ export default function Info() {
             pointerEvents: "none",
             zIndex: 9999,
             backgroundColor: "#0f1118ff",
-            borderRadius: "50%",
+            borderRadius: "0",
             border: "2px solid #0f1118ff",
             display: "flex",
             alignItems: "center",

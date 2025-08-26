@@ -62,8 +62,22 @@ export default function Projects() {
         {projects.map((project, index) => (
           <div
             key={project.id}
-            onMouseEnter={() => setHoveredProject(index)}
-            onMouseLeave={() => setHoveredProject(null)}
+            onMouseEnter={() => {
+              setHoveredProject(index);
+              document.dispatchEvent(
+                new CustomEvent("projectHover", {
+                  detail: { isHovering: true },
+                })
+              );
+            }}
+            onMouseLeave={() => {
+              setHoveredProject(null);
+              document.dispatchEvent(
+                new CustomEvent("projectHover", {
+                  detail: { isHovering: false },
+                })
+              );
+            }}
             onClick={() => {
               console.log(`Navigate to ${project.link}`);
             }}
