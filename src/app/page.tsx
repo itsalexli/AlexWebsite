@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, ReactNode, useState } from "react";
-import Image from "next/image";
+import React from "react";
 import VantaFog from "../components/VantaFog";
 import CustomCursor from "../components/CustomCursor";
 import Info from "./info";
