@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
             flexDirection: "row",
             flexWrap: "nowrap",
             gap: "40px",
-            paddingTop: "100px",
+            paddingTop: "50px",
             paddingLeft: "20px",
             paddingRight: "20px",
             maxWidth: "1400px",

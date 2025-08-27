@@ -56,7 +56,8 @@ export default function Projects() {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
-          gap: "30px",
+          columnGap: "30px",
+          rowGap: "10px",
         }}
       >
         {projects.map((project, index) => (
@@ -109,7 +110,7 @@ export default function Projects() {
                 justifyContent: "center",
                 position: "relative",
                 overflow: "hidden",
-                minHeight: "500px",
+                minHeight: "600px",
               }}
             >
               <div
