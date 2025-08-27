@@ -77,3 +77,111 @@ body {
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-out;
 }
+
+/* Mobile Responsive Styles - Only applies to mobile, desktop unchanged */
+
+/* Main Layout Mobile Responsiveness */
+@media (max-width: 768px) {
+  .main-layout {
+    flex-direction: column !important;
+    gap: 20px !important;
+    padding-top: 30px !important;
+  }
+  
+  /* About Section Mobile Layout */
+  .about-mobile-layout {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 30px !important;
+    align-items: flex-start !important;
+  }
+  
+  .about-name-section {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  
+  .about-definition-section {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  
+  .about-name {
+    font-size: 2.5rem !important;
+    margin-bottom: 0 !important;
+  }
+  
+  .about-definition {
+    font-size: 1.1rem !important;
+    margin-top: 0 !important;
+  }
+  
+  /* Projects Mobile */
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+    column-gap: 0px !important;
+    row-gap: 15px !important;
+    padding: 0px 20px !important;
+  }
+
+  /* Make project images smaller on mobile */
+  .projects-grid > div > div:first-child {
+    min-height: 400px !important;
+    max-height: 500px !important;
+  }
+
+  .project-info {
+    padding: 8px 15px 25px 15px !important;
+  }
+
+  .project-info p {
+    font-size: 1.2rem !important;
+  }
+
+  .project-info h3 {
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-layout {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  .about-mobile-layout {
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+  
+  .about-name {
+    font-size: 2rem !important;
+  }
+  
+  .about-definition {
+    font-size: 1rem !important;
+  }
+  
+  .projects-grid {
+    padding: 0px 15px !important;
+    row-gap: 20px !important;
+  }
+
+  /* Make project images even smaller on small mobile */
+  .projects-grid > div > div:first-child {
+    min-height: 200px !important;
+    max-height: 250px !important;
+  }
+
+  .project-info {
+    padding: 6px 12px 20px 12px !important;
+  }
+
+  .project-info p {
+    font-size: 1.1rem !important;
+  }
+
+  .project-info h3 {
+    font-size: 0.9rem !important;
+  }
+}

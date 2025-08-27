@@ -25,6 +25,7 @@ const HomePage: React.FC = () => {
             margin: "0 auto",
             alignItems: "flex-start",
           }}
+          className="main-layout"
         >
           <div style={{ flex: 1, minWidth: 0 }}>
             <About />

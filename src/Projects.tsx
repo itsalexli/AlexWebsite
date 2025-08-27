@@ -59,6 +59,7 @@ export default function Projects() {
           columnGap: "30px",
           rowGap: "10px",
         }}
+        className="projects-grid"
       >
         {projects.map((project, index) => (
           <div
@@ -134,10 +135,11 @@ export default function Projects() {
               {/* Project Info */}
               <div
                 style={{
-                  padding: "20px",
+                  padding: "10px 20px 40px 20px",
                   width: "100%",
                   textAlign: "left",
                 }}
+                className="project-info"
               >
                 <p
                   style={{
