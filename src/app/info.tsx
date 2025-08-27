@@ -73,7 +73,8 @@ export default function Info() {
         display: "flex",
         flexDirection: "column",
         gap: "0px",
-        fontFamily: "system-ui, -apple-system, sans-serif",
+        fontFamily:
+          '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
       }}
     >
       {/* Company Logo Cursor - Only shows when hovering over experience cards */}

@@ -5,7 +5,8 @@ export default function About() {
     <div
       style={{
         padding: "40px 20px",
-        fontFamily: "system-ui, -apple-system, sans-serif",
+        fontFamily:
+          '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
       }}
     >
       <div style={{ marginBottom: "30px" }}>

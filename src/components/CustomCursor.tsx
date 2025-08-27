@@ -122,6 +122,8 @@ const CustomCursor: React.FC = () => {
           alignItems: "center",
           justifyContent: "center",
           fontSize: "12px",
+          fontFamily:
+            '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
           color: "white",
           fontWeight: "500",
           transition: "all 0.1s ease",
@@ -161,6 +163,8 @@ const CustomCursor: React.FC = () => {
         alignItems: "center",
         justifyContent: "center",
         fontSize: "12px",
+        fontFamily:
+          '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
         color: "white",
         fontWeight: "500",
         opacity: isTransitioning ? 0 : 1,
