@@ -87,35 +87,35 @@ body {
     gap: 20px !important;
     padding-top: 30px !important;
   }
-  
+
   /* About Section Mobile Layout */
   .about-mobile-layout {
     display: flex !important;
-    flex-direction: row !important;
-    gap: 30px !important;
+    flex-direction: column !important;
+    gap: 20px !important;
     align-items: flex-start !important;
   }
-  
+
   .about-name-section {
     flex: 1 !important;
     min-width: 0 !important;
   }
-  
+
   .about-definition-section {
     flex: 1 !important;
     min-width: 0 !important;
   }
-  
+
   .about-name {
     font-size: 2.5rem !important;
     margin-bottom: 0 !important;
   }
-  
+
   .about-definition {
     font-size: 1.1rem !important;
     margin-top: 0 !important;
   }
-  
+
   /* Projects Mobile */
   .projects-grid {
     grid-template-columns: 1fr !important;
@@ -141,6 +141,26 @@ body {
   .project-info h3 {
     font-size: 1rem !important;
   }
+
+  /* Info section mobile styles */
+  .info-container {
+    padding: 0 !important;
+    margin: 0 20px !important;
+  }
+
+  .info-experience-card {
+    width: calc(100vw - 80px) !important;
+    max-width: calc(100% - 0px) !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Add space between info and projects on mobile */
+  .projects-section {
+    padding-top: 60px !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -148,20 +168,20 @@ body {
     padding-left: 15px !important;
     padding-right: 15px !important;
   }
-  
+
   .about-mobile-layout {
     flex-direction: column !important;
     gap: 15px !important;
   }
-  
+
   .about-name {
     font-size: 2rem !important;
   }
-  
+
   .about-definition {
     font-size: 1rem !important;
   }
-  
+
   .projects-grid {
     padding: 0px 15px !important;
     row-gap: 20px !important;
@@ -169,8 +189,8 @@ body {
 
   /* Make project images even smaller on small mobile */
   .projects-grid > div > div:first-child {
-    min-height: 200px !important;
-    max-height: 250px !important;
+    min-height: 350px !important;
+    max-height: 450px !important;
   }
 
   .project-info {
@@ -183,5 +203,25 @@ body {
 
   .project-info h3 {
     font-size: 0.9rem !important;
+  }
+
+  /* Info section small mobile styles */
+  .info-container {
+    padding: 0 !important;
+    margin: 0 15px !important;
+  }
+
+  .info-experience-card {
+    width: calc(100vw - 60px) !important;
+    max-width: calc(100% - 0px) !important;
+    margin: 0 !important;
+    padding: 8px !important;
+    gap: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Add space between info and projects on small mobile */
+  .projects-section {
+    padding-top: 50px !important;
   }
 }

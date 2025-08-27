@@ -24,6 +24,7 @@ const HomePage: React.FC = () => {
             maxWidth: "1400px",
             margin: "0 auto",
             alignItems: "flex-start",
+            paddingBottom: "0px",
           }}
           className="main-layout"
         >
@@ -35,7 +36,9 @@ const HomePage: React.FC = () => {
           </div>
         </div>
 
-        <Projects />
+        <div style={{ paddingTop: "0px" }} className="projects-section">
+          <Projects />
+        </div>
       </VantaFog>
       <CustomCursor />
     </div>

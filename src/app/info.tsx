@@ -69,12 +69,18 @@ export default function Info() {
 
   return (
     <div
+      className="info-container"
       style={{
         display: "flex",
         flexDirection: "column",
         gap: "0px",
         fontFamily:
           '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
+        width: "100%",
+        maxWidth: "600px",
+        margin: "0 auto",
+        padding: "0",
+        boxSizing: "border-box",
       }}
     >
       {/* Company Logo Cursor - Only shows when hovering over experience cards */}
@@ -116,7 +122,9 @@ export default function Info() {
           style={{
             padding: "12px",
             borderRadius: "0px",
-            width: "600px",
+            width: "100%",
+            maxWidth: "560px",
+            margin: "0 auto",
             border: "1px solid rgba(0, 0, 0, 0.1)",
             display: "flex",
             flexDirection: "row",
@@ -127,10 +135,19 @@ export default function Info() {
                 : "transparent",
             transition: "background-color 0.3s ease",
             cursor: "none",
+            boxSizing: "border-box",
           }}
+          className="info-experience-card"
         >
           {/* Text Content */}
-          <div style={{ flex: 1 }}>
+          <div
+            style={{
+              flex: 1,
+              minWidth: 0,
+              wordWrap: "break-word",
+              overflow: "hidden",
+            }}
+          >
             <h3
               style={{
                 color: "black",
@@ -156,6 +173,9 @@ export default function Info() {
                 marginBottom: "8px",
                 lineHeight: "1.4",
                 fontSize: "0.85rem",
+                wordWrap: "break-word",
+                whiteSpace: "normal",
+                overflow: "hidden",
               }}
             >
               {exp.description}
