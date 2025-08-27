@@ -14,7 +14,7 @@ export default function Projects() {
       description:
         "Open-source background coding agent and interface (1000+ stars)",
       image: "/VibeCompose.jpg", // Using available images
-      link: "/projects/shadow",
+      link: "https://github.com/itsalexli/vibecompoz",
     },
     {
       id: 2,
@@ -22,7 +22,7 @@ export default function Projects() {
       year: "2025",
       description: "Building v0, the full-stack vibe coding platform",
       image: "/Agely.jpg",
-      link: "/projects/vercel",
+      link: "https://devpost.com/software/agely",
     },
     {
       id: 3,
@@ -30,7 +30,7 @@ export default function Projects() {
       year: "2024",
       description: "AI-powered health data visualization and insights platform",
       image: "/CIBC3.jpg",
-      link: "/projects/health-analytics",
+      link: "https://apps.apple.com/ca/app/cibc-mobile-banking/id351448953",
     },
     {
       id: 4,
@@ -38,7 +38,7 @@ export default function Projects() {
       year: "2024",
       description: "Real-time audio visualization with WebGL and Three.js",
       image: "/tradelite.jpg",
-      link: "/projects/music-visualizer",
+      link: "https://devpost.com/software/sunlight-eq78k5?_gl=1*guuck5*_gcl_au*MTkxODA5Njg5OS4xNzUwNjAxMjY5*_ga*MTg4MzUyMDk1Mi4xNzUwNjAxMjcx*_ga_0YHJK3Y10M*czE3NTYyMzMxNTUkbzI0JGcxJHQxNzU2MjMzMTY5JGo0NiRsMCRoMA..",
     },
   ];
 
@@ -79,7 +79,13 @@ export default function Projects() {
               );
             }}
             onClick={() => {
-              console.log(`Navigate to ${project.link}`);
+              if (project.link.startsWith("http")) {
+                // External link - open in new tab
+                window.open(project.link, "_blank");
+              } else {
+                // Internal link - navigate normally
+                window.location.href = project.link;
+              }
             }}
             style={{
               backgroundColor: "white",

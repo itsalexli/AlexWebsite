@@ -124,10 +124,10 @@ const CustomCursor: React.FC = () => {
           fontSize: "12px",
           color: "white",
           fontWeight: "500",
-          transition: "all 0.2s ease",
+          transition: "all 0.1s ease",
         }}
       >
-        {showProjectText && "View Projects"}
+        {showProjectText && "View Project"}
       </div>
     );
   }
