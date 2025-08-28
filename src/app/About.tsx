@@ -69,7 +69,7 @@ export default function About() {
           >
             <p style={{ marginBottom: "0.8em" }}>
               <strong>1.</strong> product engineer obsessed with building
-              systems to improve lives happier, healthier, and efficient.{" "}
+              systems to make lives happier, healthier, and efficient.{" "}
               <strong>2.</strong> writes a lot of code, jots a lot of notes,
               makes a lot of pretty pages. <strong>3.</strong> loves basketball
               + frisbee, classical music improv (piano, cello), and wellness

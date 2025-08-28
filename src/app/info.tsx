@@ -79,7 +79,7 @@ export default function Info() {
         width: "100%",
         maxWidth: "600px",
         margin: "0 auto",
-        padding: "0",
+        padding: "0 0 40px 0",
         boxSizing: "border-box",
       }}
     >
@@ -152,17 +152,17 @@ export default function Info() {
               style={{
                 color: "black",
                 marginBottom: "4px",
-                fontSize: "0.95rem",
+                fontSize: "1.1rem",
               }}
             >
               {exp.company}
             </h3>
             <p
               style={{
-                color: "black",
+                color: "rgba(0, 0, 0, 0.6)",
                 marginBottom: "6px",
                 fontWeight: "500",
-                fontSize: "0.9rem",
+                fontSize: "1.05rem",
               }}
             >
               {exp.role} | {exp.date}
@@ -172,7 +172,7 @@ export default function Info() {
                 color: "rgba(0, 0, 0, 0.7)",
                 marginBottom: "8px",
                 lineHeight: "1.4",
-                fontSize: "0.85rem",
+                fontSize: "1rem",
                 wordWrap: "break-word",
                 whiteSpace: "normal",
                 overflow: "hidden",
