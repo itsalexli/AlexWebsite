@@ -1,30 +1,50 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 const CustomCursor: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [isHoveringExperience, setIsHoveringExperience] = useState(false);
   const [isHoveringProject, setIsHoveringProject] = useState(false);
   const [showProjectText, setShowProjectText] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const rafRef = useRef<number | undefined>();
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
+  // Smooth lerp animation
   useEffect(() => {
     if (!isClient) return;
 
-    // Use requestAnimationFrame for smoother mouse tracking
-    let rafId: number;
+    const lerp = (start: number, end: number, factor: number) => {
+      return start + (end - start) * factor;
+    };
+
+    const animate = () => {
+      setCursorPosition((prev) => ({
+        x: lerp(prev.x, mousePosition.x, 0.15),
+        y: lerp(prev.y, mousePosition.y, 0.15),
+      }));
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [mousePosition, isClient]);
+
+  useEffect(() => {
+    if (!isClient) return;
+
     const updateMousePosition = (e: MouseEvent) => {
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        setMousePosition({ x: e.clientX, y: e.clientY });
-      });
+      setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
     const handleMouseEnter = () => setIsHovering(true);
@@ -83,7 +103,6 @@ const CustomCursor: React.FC = () => {
         "projectHover",
         handleProjectHover as EventListener
       );
-      if (rafId) cancelAnimationFrame(rafId);
       interactiveElements.forEach((el) => {
         el.removeEventListener("mouseenter", handleMouseEnter);
         el.removeEventListener("mouseleave", handleMouseLeave);
@@ -101,23 +120,25 @@ const CustomCursor: React.FC = () => {
 
   // Project hover state overrides
   if (isHoveringProject) {
-    const width = "120px";
-    const height = "40px";
+    const width = 120;
+    const height = 40;
 
     return (
       <div
         style={{
           position: "fixed",
-          left: mousePosition.x - 60,
-          top: mousePosition.y - 20,
-          width: width,
-          height: height,
+          left: 0,
+          top: 0,
+          width: `${width}px`,
+          height: `${height}px`,
           backgroundColor: "black",
           border: "none",
           borderRadius: "0px",
           pointerEvents: "none",
           zIndex: 9999,
-          transform: "translate3d(0, 0, 0)",
+          transform: `translate3d(${cursorPosition.x - width / 2}px, ${
+            cursorPosition.y - height / 2
+          }px, 0)`,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -126,7 +147,8 @@ const CustomCursor: React.FC = () => {
             '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
           color: "white",
           fontWeight: "500",
-          transition: "all 0.1s ease",
+          transition: "width 0.15s ease, height 0.15s ease",
+          willChange: "transform",
         }}
       >
         {showProjectText && "View Project"}
@@ -134,31 +156,24 @@ const CustomCursor: React.FC = () => {
     );
   }
 
-  const width =
-    isHovering && !isTransitioning ? `${baseSize}px` : `${targetSize}px`;
-  const height =
-    isHovering && !isTransitioning ? `${baseSize}px` : `${targetSize}px`;
+  const size = isHovering && !isTransitioning ? baseSize : targetSize;
 
   return (
     <div
       style={{
         position: "fixed",
-        left:
-          isHovering && !isTransitioning
-            ? mousePosition.x - baseSize / 2
-            : mousePosition.x - targetSize / 2,
-        top:
-          isHovering && !isTransitioning
-            ? mousePosition.y - baseSize / 2
-            : mousePosition.y - targetSize / 2,
-        width: width,
-        height: height,
+        left: 0,
+        top: 0,
+        width: `${size}px`,
+        height: `${size}px`,
         backgroundColor: "#0f1118ff",
         border: "none",
         borderRadius: 0,
         pointerEvents: "none",
         zIndex: 9999,
-        transform: "translate3d(0, 0, 0)",
+        transform: `translate3d(${cursorPosition.x - size / 2}px, ${
+          cursorPosition.y - size / 2
+        }px, 0)`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -168,6 +183,8 @@ const CustomCursor: React.FC = () => {
         color: "white",
         fontWeight: "500",
         opacity: isTransitioning ? 0 : 1,
+        transition: "width 0.15s ease, height 0.15s ease, opacity 0.15s ease",
+        willChange: "transform",
       }}
     ></div>
   );
