@@ -85,13 +85,13 @@ export default function VibeCompose() {
           <p className="text-lg text-gray-700 leading-relaxed">
             VibeCompose is an open-source project that bridges the gap between
             traditional musical composition and modern coding practices. In an
-            era where AI is transforming creative workflows, there's a growing
-            need for tools that help musicians express their ideas through code
-            while maintaining the intuitive nature of musical creation. We aimed
-            to solve that by creating an agent that understands both musical
-            concepts and programming logic, allowing users to compose through
-            natural language instructions that get translated into executable
-            musical code.
+            era where AI is transforming creative workflows, there&apos;s a
+            growing need for tools that help musicians express their ideas
+            through code while maintaining the intuitive nature of musical
+            creation. We aimed to solve that by creating an agent that
+            understands both musical concepts and programming logic, allowing
+            users to compose through natural language instructions that get
+            translated into executable musical code.
           </p>
         </div>
       </div>

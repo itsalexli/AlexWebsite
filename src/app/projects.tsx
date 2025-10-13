@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 export default function ProjectsShowcase() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -147,12 +148,11 @@ export default function ProjectsShowcase() {
                 overflow: "hidden",
               }}
             >
-              <img
+              <Image
                 src={project.image}
                 alt={project.title}
+                fill
                 style={{
-                  width: "100%",
-                  height: "100%",
                   objectFit: "cover",
                   transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                   transform: hoveredCard === index ? "scale(1.1)" : "scale(1)",
