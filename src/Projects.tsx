@@ -81,7 +81,11 @@ export default function Projects() {
               );
             }}
             onClick={() => {
-              if (project.link.startsWith("http")) {
+              if (index === 0) {
+                // Vibe Compose project
+                // Navigate to the VibeCompose page
+                window.location.href = "/vibecompose";
+              } else if (project.link.startsWith("http")) {
                 // External link - open in new tab
                 window.open(project.link, "_blank");
               } else {
