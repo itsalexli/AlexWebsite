@@ -36,7 +36,10 @@ const HomePage: React.FC = () => {
           </div>
         </div>
 
-        <div style={{ paddingTop: "0px", paddingBottom: "50px" }} className="projects-section">
+        <div
+          style={{ paddingTop: "0px", paddingBottom: "50px" }}
+          className="projects-section"
+        >
           <Projects />
         </div>
       </VantaFog>

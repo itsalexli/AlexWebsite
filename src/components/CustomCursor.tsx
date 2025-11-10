@@ -11,7 +11,7 @@ const CustomCursor: React.FC = () => {
   const [isHoveringProject, setIsHoveringProject] = useState(false);
   const [showProjectText, setShowProjectText] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const rafRef = useRef<number | undefined>();
+  const rafRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     setIsClient(true);
