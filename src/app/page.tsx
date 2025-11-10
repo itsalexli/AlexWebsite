@@ -11,7 +11,7 @@ import Projects from "@/Projects";
 const HomePage: React.FC = () => {
   return (
     <div>
-      <VantaFog>
+      <VantaFog style={{ minHeight: "100%" }}>
         <div
           style={{
             display: "flex",
@@ -36,7 +36,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
 
-        <div style={{ paddingTop: "0px" }} className="projects-section">
+        <div style={{ paddingTop: "0px", paddingBottom: "50px" }} className="projects-section">
           <Projects />
         </div>
       </VantaFog>

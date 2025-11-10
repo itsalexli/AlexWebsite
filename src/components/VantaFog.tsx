@@ -183,7 +183,7 @@ const VantaFog: React.FC<VantaFogProps> = ({
       className={`vanta-fog-container ${className}`}
       style={{
         position: "relative",
-        minHeight: "200px",
+        minHeight: "100vh",
         minWidth: "200px",
         overflow: "hidden",
         ...style,

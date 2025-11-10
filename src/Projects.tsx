@@ -17,14 +17,6 @@ export default function Projects() {
     },
     {
       id: 2,
-      title: "Agely",
-      year: "2025",
-      description: "Virtual web agent for the elderly ($4,500 winner)",
-      image: "/Agely.jpg",
-      link: "https://devpost.com/software/agely",
-    },
-    {
-      id: 3,
       title: "CIBC",
       year: "2025",
       description: "Building CIBC's mobile banking app with 9M+ users",
@@ -32,7 +24,24 @@ export default function Projects() {
       link: "https://apps.apple.com/ca/app/cibc-mobile-banking/id351448953",
     },
     {
+      id: 3,
+      title: "Agely",
+      year: "2025",
+      description: "Virtual web agent for the elderly ($4,500 winner)",
+      image: "/Agely.jpg",
+      link: "https://devpost.com/software/agely",
+    },
+    {
       id: 4,
+      title: "Autumn",
+      year: "2024",
+      description: "Fullstack product engineering for 600k VC-backed startup",
+      image: "/autumnimage.jpg",
+      link: "https://www.autumn.co/",
+    },
+
+    {
+      id: 5,
       title: "SunLite",
       year: "2024",
       description: "Real-time trading platform for teens ",
@@ -81,11 +90,7 @@ export default function Projects() {
               );
             }}
             onClick={() => {
-              if (index === 0) {
-                // Vibe Compose project
-                // Navigate to the VibeCompose page
-                window.location.href = "/vibecompose";
-              } else if (project.link.startsWith("http")) {
+              if (project.link.startsWith("http")) {
                 // External link - open in new tab
                 window.open(project.link, "_blank");
               } else {
