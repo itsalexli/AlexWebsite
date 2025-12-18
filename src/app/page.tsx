@@ -9,7 +9,7 @@ import Projects from "@/Projects";
 // Main HomePage Component
 const HomePage: React.FC = () => {
   return (
-    <div style={{ backgroundColor: "#0a0a0a", minHeight: "100vh" }}>
+    <div style={{ backgroundColor: "#0d0d0d", minHeight: "100vh" }}>
       <div
         style={{
           display: "flex",
