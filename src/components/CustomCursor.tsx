@@ -3,7 +3,6 @@
 import React, { useEffect, useState, useRef } from "react";
 
 const CustomCursor: React.FC = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isClient, setIsClient] = useState(false);
@@ -11,40 +10,16 @@ const CustomCursor: React.FC = () => {
   const [isHoveringProject, setIsHoveringProject] = useState(false);
   const [showProjectText, setShowProjectText] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const rafRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Smooth lerp animation
-  useEffect(() => {
-    if (!isClient) return;
-
-    const lerp = (start: number, end: number, factor: number) => {
-      return start + (end - start) * factor;
-    };
-
-    const animate = () => {
-      setCursorPosition((prev) => ({
-        x: lerp(prev.x, mousePosition.x, 0.15),
-        y: lerp(prev.y, mousePosition.y, 0.15),
-      }));
-      rafRef.current = requestAnimationFrame(animate);
-    };
-
-    rafRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [mousePosition, isClient]);
-
   useEffect(() => {
     if (!isClient) return;
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      setCursorPosition({ x: e.clientX, y: e.clientY });
     };
 
     const handleMouseEnter = () => setIsHovering(true);
@@ -74,7 +49,9 @@ const CustomCursor: React.FC = () => {
       }
     };
 
-    document.addEventListener("mousemove", updateMousePosition);
+    document.addEventListener("mousemove", updateMousePosition, {
+      passive: true,
+    });
     document.addEventListener(
       "experienceHover",
       handleExperienceHover as EventListener
@@ -131,7 +108,7 @@ const CustomCursor: React.FC = () => {
           top: 0,
           width: `${width}px`,
           height: `${height}px`,
-          backgroundColor: "black",
+          backgroundColor: "white",
           border: "none",
           borderRadius: "0px",
           pointerEvents: "none",
@@ -145,7 +122,7 @@ const CustomCursor: React.FC = () => {
           fontSize: "12px",
           fontFamily:
             '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
-          color: "white",
+          color: "black",
           fontWeight: "500",
           transition: "width 0.15s ease, height 0.15s ease",
           willChange: "transform",
@@ -166,8 +143,8 @@ const CustomCursor: React.FC = () => {
         top: 0,
         width: `${size}px`,
         height: `${size}px`,
-        backgroundColor: "#0f1118ff",
-        border: "none",
+        backgroundColor: "#ffffff",
+        border: "2px solid #ffffff",
         borderRadius: 0,
         pointerEvents: "none",
         zIndex: 9999,
@@ -180,14 +157,13 @@ const CustomCursor: React.FC = () => {
         fontSize: "12px",
         fontFamily:
           '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
-        color: "white",
+        color: "black",
         fontWeight: "500",
-        opacity: isTransitioning ? 0 : 1,
-        transition: "width 0.15s ease, height 0.15s ease, opacity 0.15s ease",
+        opacity: 1,
+        transition: "width 0.15s ease, height 0.15s ease",
         willChange: "transform",
       }}
     ></div>
   );
 };
-
 export default CustomCursor;

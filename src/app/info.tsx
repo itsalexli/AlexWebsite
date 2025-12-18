@@ -50,20 +50,27 @@ export default function Info() {
 
   const experiences = [
     {
+      company: "Turing",
+      role: "Software QA Engineer Intern",
+      description: "AL/ML loss analysis and internal tooling development.",
+      date: "2025",
+      logo: "/turing.png",
+    },
+    {
       company: "CIBC",
       role: "Software Engineer Intern",
       description:
-        "Mobile engineering building automated money feature scaled for $6B+ in transaction volume (piloting for 2027).",
+        "Automated money feature supporting high-volume transfers for 10M transactions.",
       date: "2025",
-      logo: "/cibc.png",
+      logo: "/cibclogo.png",
     },
     {
       company: "Autumn",
       role: "Software Engineer Intern",
       description:
-        "Fullstack engineering building RAG pipeline and scraper application using Typescript and Python for 1,200+ users.",
+        "Full-stack eng building GCP-powered data pipelines for price listings.",
       date: "2025",
-      logo: "/autumn.png",
+      logo: "/autumnlogo1.png",
     },
   ];
 
@@ -94,9 +101,9 @@ export default function Info() {
             height: "50px",
             pointerEvents: "none",
             zIndex: 9999,
-            backgroundColor: "#0f1118ff",
+            backgroundColor: "#ffffff",
             borderRadius: "0",
-            border: "2px solid #0f1118ff",
+            border: "2px solid #ffffff",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -125,13 +132,13 @@ export default function Info() {
             width: "100%",
             maxWidth: "560px",
             margin: "0 auto",
-            border: "1px solid rgba(0, 0, 0, 0.1)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
             display: "flex",
             flexDirection: "row",
             gap: "12px",
             backgroundColor:
               hoveredExperience === index
-                ? "rgba(128, 128, 128, 0.2)"
+                ? "rgba(255, 255, 255, 0.1)"
                 : "transparent",
             transition: "background-color 0.3s ease",
             cursor: "none",
@@ -150,7 +157,7 @@ export default function Info() {
           >
             <h3
               style={{
-                color: "black",
+                color: "white",
                 marginBottom: "4px",
                 fontSize: "1.1rem",
               }}
@@ -159,7 +166,7 @@ export default function Info() {
             </h3>
             <p
               style={{
-                color: "rgba(0, 0, 0, 0.6)",
+                color: "rgba(255, 255, 255, 0.7)",
                 marginBottom: "6px",
                 fontWeight: "500",
                 fontSize: "1.05rem",
@@ -169,7 +176,7 @@ export default function Info() {
             </p>
             <p
               style={{
-                color: "rgba(0, 0, 0, 0.7)",
+                color: "rgba(255, 255, 255, 0.8)",
                 marginBottom: "8px",
                 lineHeight: "1.4",
                 fontSize: "1rem",

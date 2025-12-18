@@ -9,12 +9,13 @@ export default function Projects() {
   const projects = [
     {
       id: 1,
-      title: "Vibe Compose",
+      title: "Agely",
       year: "2025",
-      description: "Open-source notation coding agent and interface",
-      image: "/VibeCompose.jpg", // Using available images
-      link: "https://github.com/itsalexli/vibecompoz",
+      description: "Virtual web agent for the elderly ($4,500 winner)",
+      image: "/Agely.jpg",
+      link: "https://devpost.com/software/agely",
     },
+
     {
       id: 2,
       title: "CIBC",
@@ -23,13 +24,14 @@ export default function Projects() {
       image: "/CIBC3.jpg",
       link: "https://apps.apple.com/ca/app/cibc-mobile-banking/id351448953",
     },
+
     {
       id: 3,
-      title: "Agely",
+      title: "Vibe Compose",
       year: "2025",
-      description: "Virtual web agent for the elderly ($4,500 winner)",
-      image: "/Agely.jpg",
-      link: "https://devpost.com/software/agely",
+      description: "Open-source notation coding agent and interface",
+      image: "/VibeCompose.jpg", // Using available images
+      link: "https://github.com/itsalexli/vibecompoz",
     },
     {
       id: 4,
@@ -139,6 +141,19 @@ export default function Projects() {
                     transition: "opacity 0.3s ease",
                   }}
                 />
+                {/* Vignette overlay - covering all edges */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    boxShadow: "inset 0 0 100px 40px rgba(0, 0, 0, 0.5)",
+                    pointerEvents: "none",
+                    zIndex: 1,
+                  }}
+                />
               </div>
 
               {/* Project Info */}
@@ -153,7 +168,7 @@ export default function Projects() {
                 <p
                   style={{
                     fontSize: "1.4rem",
-                    color: "rgba(0, 0, 0, 0.9)",
+                    color: "rgba(255, 255, 255, 0.9)",
                     lineHeight: "1.4",
                     margin: "0 0 6px 0",
                     fontWeight: "500",
@@ -166,7 +181,7 @@ export default function Projects() {
                   style={{
                     fontSize: "1.1rem",
                     fontWeight: "400",
-                    color: "rgba(0, 0, 0, 0.5)",
+                    color: "rgba(255, 255, 255, 0.5)",
                     margin: "0",
                     textAlign: "left",
                   }}

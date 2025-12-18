@@ -17,8 +17,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
-  color: #333;
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: #0a0a0a;
   overflow-x: hidden;
   cursor: none;
 }

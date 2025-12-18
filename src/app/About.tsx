@@ -18,7 +18,7 @@ export default function About() {
               fontSize: "4rem",
               fontWeight: "600",
               lineHeight: "1.1",
-              color: "black",
+              color: "white",
               marginBottom: "10px",
               letterSpacing: "-0.02em",
             }}
@@ -45,7 +45,7 @@ export default function About() {
             </span>{" "}
             <span
               style={{
-                color: "black",
+                color: "white",
                 fontStyle: "italic",
                 fontWeight: "400",
               }}
@@ -62,18 +62,18 @@ export default function About() {
               fontSize: "1.3rem",
               fontWeight: "400",
               lineHeight: "1.3",
-              color: "black",
+              color: "white",
               fontStyle: "italic",
             }}
             className="about-definition"
           >
             <p style={{ marginBottom: "0.8em" }}>
-              <strong>1.</strong> product engineer obsessed with building
-              systems to make lives happier, healthier, and efficient.{" "}
-              <strong>2.</strong> writes a lot of code, jots a lot of notes,
-              makes a lot of pretty pages. <strong>3.</strong> loves basketball
-              + frisbee, classical music improv (piano, cello), and wellness
-              psychology.
+              <strong>1.</strong> software engineer obsessed with building
+              systems and product strategy to make lives happier, healthier, and
+              efficient. <strong>2.</strong> writes a lot of code, jots a lot of
+              notes, makes a lot of pretty pages. <strong>3.</strong> loves
+              basketball + frisbee, classical music improv (piano, cello), and
+              wellness improvement.
             </p>
           </div>
         </div>
