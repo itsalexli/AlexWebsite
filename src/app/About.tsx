@@ -68,8 +68,8 @@ export default function About() {
             className="about-definition"
           >
             <p style={{ marginBottom: "0.8em" }}>
-              <strong>1.</strong> software engineer obsessed with building
-              systems and product strategy to make lives happier, healthier, and
+              <strong>1.</strong> engineer obsessed with building systems, data,
+              and product strategy to make lives happier, healthier, and
               efficient. <strong>2.</strong> writes a lot of code, jots a lot of
               notes, makes a lot of pretty pages. <strong>3.</strong> loves
               basketball + frisbee, classical music improv (piano, cello), and
