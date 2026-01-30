@@ -51,7 +51,7 @@ export default function Info() {
   const experiences = [
     {
       company: "Turing",
-      role: "Software QA Engineer Intern",
+      role: "SoftwareEngineer Intern (QA)",
       description: "AL/ML loss analysis and internal tooling development.",
       date: "2025",
       logo: "/turing.png",
