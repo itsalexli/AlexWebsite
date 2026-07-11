@@ -50,23 +50,29 @@ export default function Info() {
 
   const experiences = [
     {
+      company: "IBM",
+      role: "AI Engineer Intern",
+      description: "Computer vision + ML, digital product engineering.",
+      date: "2026",
+      logo: "/ibm.png",
+    },
+    {
       company: "Turing",
       role: "Software Engineer Intern (QA)",
-      description: "AL/ML loss analysis and internal tooling development.",
-      date: "2025",
+      description: "AI internal tooling development, QA & loss analysis.",
+      date: "2026",
       logo: "/turing.png",
     },
     {
       company: "CIBC",
       role: "Software Engineer Intern",
-      description:
-        "Automated money feature supporting high-volume transfers for 10M transactions.",
+      description: "Automated money movement supporting high-volume transfers.",
       date: "2025",
       logo: "/cibclogo.png",
     },
     {
       company: "Autumn",
-      role: "Software Engineer Intern",
+      role: "Product Engineer Intern",
       description:
         "Full-stack eng building GCP-powered data pipelines for price listings.",
       date: "2025",
@@ -114,8 +120,12 @@ export default function Info() {
           <Image
             src={experiences[hoveredExperience].logo}
             alt={`${experiences[hoveredExperience].company} logo`}
-            width={40}
-            height={40}
+            width={
+              experiences[hoveredExperience].company === "IBM" ? 32 : 40
+            }
+            height={
+              experiences[hoveredExperience].company === "IBM" ? 32 : 40
+            }
             style={{ objectFit: "contain" }}
           />
         </div>
@@ -127,18 +137,14 @@ export default function Info() {
           onMouseEnter={() => handleExperienceEnter(index)}
           onMouseLeave={() => handleExperienceLeave()}
           style={{
-            padding: "12px",
-            borderRadius: "0px",
+            padding: "14px 4px",
             width: "100%",
             maxWidth: "560px",
             margin: "0 auto",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
-            display: "flex",
-            flexDirection: "row",
-            gap: "12px",
+            borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
             backgroundColor:
               hoveredExperience === index
-                ? "rgba(255, 255, 255, 0.1)"
+                ? "rgba(255, 255, 255, 0.05)"
                 : "transparent",
             transition: "background-color 0.3s ease",
             cursor: "none",
@@ -146,48 +152,55 @@ export default function Info() {
           }}
           className="info-experience-card"
         >
-          {/* Text Content */}
           <div
             style={{
-              flex: 1,
-              minWidth: 0,
-              wordWrap: "break-word",
-              overflow: "hidden",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "baseline",
+              gap: "16px",
             }}
           >
-            <h3
+            <span
+              style={{
+                color: "rgba(255, 255, 255, 0.5)",
+                fontSize: "1rem",
+                flexShrink: 0,
+                width: "48px",
+              }}
+            >
+              {exp.date}
+            </span>
+            <span
               style={{
                 color: "white",
-                marginBottom: "4px",
                 fontSize: "1.1rem",
+                flexShrink: 0,
               }}
             >
               {exp.company}
-            </h3>
-            <p
+            </span>
+            <span
               style={{
-                color: "rgba(255, 255, 255, 0.7)",
-                marginBottom: "6px",
-                fontWeight: "500",
-                fontSize: "1.05rem",
-              }}
-            >
-              {exp.role} | {exp.date}
-            </p>
-            <p
-              style={{
-                color: "rgba(255, 255, 255, 0.8)",
-                marginBottom: "8px",
-                lineHeight: "1.4",
+                color: "rgba(255, 255, 255, 0.5)",
                 fontSize: "1rem",
-                wordWrap: "break-word",
-                whiteSpace: "normal",
-                overflow: "hidden",
+                textAlign: "right",
+                flex: 1,
               }}
             >
-              {exp.description}
-            </p>
+              {exp.role}
+            </span>
           </div>
+          <p
+            style={{
+              color: "rgba(255, 255, 255, 0.6)",
+              marginTop: "6px",
+              marginLeft: "64px",
+              lineHeight: "1.4",
+              fontSize: "0.95rem",
+            }}
+          >
+            {exp.description}
+          </p>
         </div>
       ))}
     </div>
