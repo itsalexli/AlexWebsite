@@ -92,78 +92,56 @@ const CustomCursor: React.FC = () => {
   }
 
   // Calculate size based on transition state
-  const baseSize = isHovering ? 30 : 14;
-  const targetSize = isTransitioning ? 14 : baseSize;
-
-  // Project hover state overrides
-  if (isHoveringProject) {
-    const width = 120;
-    const height = 40;
-
-    return (
-      <div
-        style={{
-          position: "fixed",
-          left: 0,
-          top: 0,
-          width: `${width}px`,
-          height: `${height}px`,
-          backgroundColor: "white",
-          border: "none",
-          borderRadius: "0px",
-          pointerEvents: "none",
-          zIndex: 9999,
-          transform: `translate3d(${cursorPosition.x - width / 2}px, ${
-            cursorPosition.y - height / 2
-          }px, 0)`,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "12px",
-          fontFamily:
-            '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
-          color: "black",
-          fontWeight: "500",
-          transition: "width 0.15s ease, height 0.15s ease",
-          willChange: "transform",
-        }}
-      >
-        {showProjectText && "View Project"}
-      </div>
-    );
-  }
-
+  const baseSize = isHovering ? 24 : 11;
+  const targetSize = isTransitioning ? 11 : baseSize;
   const size = isHovering && !isTransitioning ? baseSize : targetSize;
 
+  // Over a project the square stretches into a "View Project" label
+  const width = isHoveringProject ? 120 : size;
+  const height = isHoveringProject ? 40 : size;
+
+  // The outer layer follows the mouse; the inner box is centered on that
+  // point, so size changes grow and shrink from the middle.
   return (
     <div
       style={{
         position: "fixed",
         left: 0,
         top: 0,
-        width: `${size}px`,
-        height: `${size}px`,
-        backgroundColor: "#ffffff",
-        border: "2px solid #ffffff",
-        borderRadius: 0,
+        width: 0,
+        height: 0,
         pointerEvents: "none",
         zIndex: 9999,
-        transform: `translate3d(${cursorPosition.x - size / 2}px, ${
-          cursorPosition.y - size / 2
-        }px, 0)`,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "12px",
-        fontFamily:
-          '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
-        color: "black",
-        fontWeight: "500",
-        opacity: 1,
-        transition: "width 0.15s ease, height 0.15s ease",
+        transform: `translate3d(${cursorPosition.x}px, ${cursorPosition.y}px, 0)`,
         willChange: "transform",
       }}
-    ></div>
+    >
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          width: `${width}px`,
+          height: `${height}px`,
+          transform: "translate(-50%, -50%)",
+          backgroundColor: "#ffffff",
+          borderRadius: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          fontSize: "12px",
+          fontFamily:
+            '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
+          color: "black",
+          fontWeight: "500",
+          transition: "width 0.15s ease, height 0.15s ease",
+        }}
+      >
+        {isHoveringProject && showProjectText && "View Project"}
+      </div>
+    </div>
   );
 };
 export default CustomCursor;

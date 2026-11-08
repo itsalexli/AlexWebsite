@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import SectionHeader from "./components/SectionHeader";
 
 export default function Projects() {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
@@ -42,33 +43,30 @@ export default function Projects() {
       link: "https://www.autumn.co/",
     },
 
-    {
-      id: 5,
-      title: "SunLite",
-      year: "2024",
-      description: "Real-time trading platform for teens ",
-      image: "/tradelite.jpg",
-      link: "https://devpost.com/software/sunlight-eq78k5?_gl=1*guuck5*_gcl_au*MTkxODA5Njg5OS4xNzUwNjAxMjY5*_ga*MTg4MzUyMDk1Mi4xNzUwNjAxMjcx*_ga_0YHJK3Y10M*czE3NTYyMzMxNTUkbzI0JGcxJHQxNzU2MjMzMTY5JGo0NiRsMCRoMA..",
-    },
   ];
 
   return (
     <div
       style={{
         padding: "0px 0px",
-        maxWidth: "1500px",
+        maxWidth: "1400px",
         margin: "0 auto",
         fontFamily:
           '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
       }}
     >
+      <div style={{ padding: "0px 40px", marginBottom: "24px" }} className="projects-header">
+        <SectionHeader label="selected work" />
+      </div>
+
       {/* Projects Grid */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
           columnGap: "30px",
-          rowGap: "10px",
+          rowGap: "30px",
+          padding: "0px 40px",
         }}
         className="projects-grid"
       >
@@ -122,7 +120,7 @@ export default function Projects() {
                 justifyContent: "center",
                 position: "relative",
                 overflow: "hidden",
-                minHeight: "600px",
+                minHeight: "480px",
               }}
             >
               <div

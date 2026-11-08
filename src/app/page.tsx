@@ -9,14 +9,14 @@ import Projects from "@/Projects";
 // Main HomePage Component
 const HomePage: React.FC = () => {
   return (
-    <div style={{ backgroundColor: "#0d0d0d", minHeight: "100vh" }}>
+    <div style={{ minHeight: "100vh", position: "relative" }}>
       <div
         style={{
           display: "flex",
           flexDirection: "row",
           flexWrap: "nowrap",
           gap: "40px",
-          paddingTop: "50px",
+          paddingTop: "120px",
           paddingLeft: "20px",
           paddingRight: "20px",
           maxWidth: "1400px",
@@ -29,7 +29,7 @@ const HomePage: React.FC = () => {
         <div style={{ flex: 1, minWidth: 0 }}>
           <About />
         </div>
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ flex: 1, minWidth: 0 }} className="info-column">
           <Info />
         </div>
       </div>

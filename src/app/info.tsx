@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import SectionHeader from "../components/SectionHeader";
 
 export default function Info() {
   const [hoveredExperience, setHoveredExperience] = useState<number | null>(
@@ -9,6 +10,9 @@ export default function Info() {
   );
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isClient, setIsClient] = useState(false);
+  // True while the logo popup is shrinking away after the mouse leaves
+  const [isClosing, setIsClosing] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -29,6 +33,8 @@ export default function Info() {
   }, [isClient]);
 
   const handleExperienceEnter = (index: number) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setIsClosing(false);
     setHoveredExperience(index);
     // Hide custom cursor component
     document.dispatchEvent(
@@ -39,44 +45,37 @@ export default function Info() {
   };
 
   const handleExperienceLeave = () => {
-    setHoveredExperience(null);
-    // Show custom cursor component
-    document.dispatchEvent(
-      new CustomEvent("experienceHover", {
-        detail: { isHovering: false },
-      })
-    );
+    // Let the logo shrink first, then hand back to the custom cursor
+    setIsClosing(true);
+    closeTimer.current = setTimeout(() => {
+      setHoveredExperience(null);
+      setIsClosing(false);
+      document.dispatchEvent(
+        new CustomEvent("experienceHover", {
+          detail: { isHovering: false },
+        })
+      );
+    }, 150);
   };
 
   const experiences = [
     {
       company: "IBM",
       role: "AI Engineer Intern",
-      description: "Computer vision + ML, digital product engineering.",
-      date: "2026",
+      description: "Digital product engineering for enterprise clients.",
       logo: "/ibm.png",
     },
     {
       company: "Turing",
-      role: "Software Engineer Intern (QA)",
+      role: "Software Engineer Intern",
       description: "AI internal tooling development, QA & loss analysis.",
-      date: "2026",
-      logo: "/turing.png",
+      logo: "/turinglogo.png",
     },
     {
       company: "CIBC",
       role: "Software Engineer Intern",
-      description: "Automated money movement supporting high-volume transfers.",
-      date: "2025",
+      description: "Automated money movement for high-volume transfers.",
       logo: "/cibclogo.png",
-    },
-    {
-      company: "Autumn",
-      role: "Product Engineer Intern",
-      description:
-        "Full-stack eng building GCP-powered data pipelines for price listings.",
-      date: "2025",
-      logo: "/autumnlogo1.png",
     },
   ];
 
@@ -115,6 +114,10 @@ export default function Info() {
             justifyContent: "center",
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
             padding: "4px",
+            transformOrigin: "center",
+            animation: isClosing
+              ? "logoShrink 0.15s ease-in forwards"
+              : "logoGrow 0.15s ease-out",
           }}
         >
           <Image
@@ -131,17 +134,25 @@ export default function Info() {
         </div>
       )}
 
+      <div
+        style={{ width: "100%", maxWidth: "560px", margin: "0 auto 4px" }}
+      >
+        <SectionHeader label="experience" />
+      </div>
+
       {experiences.map((exp, index) => (
         <div
           key={index}
           onMouseEnter={() => handleExperienceEnter(index)}
           onMouseLeave={() => handleExperienceLeave()}
           style={{
-            padding: "14px 4px",
+            padding: "18px 4px",
+            // Thin divider between entries (not above the first)
+            borderTop:
+              index > 0 ? "1px solid rgba(255, 255, 255, 0.1)" : "none",
             width: "100%",
             maxWidth: "560px",
             margin: "0 auto",
-            borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
             backgroundColor:
               hoveredExperience === index
                 ? "rgba(255, 255, 255, 0.05)"
@@ -162,41 +173,33 @@ export default function Info() {
           >
             <span
               style={{
-                color: "rgba(255, 255, 255, 0.5)",
-                fontSize: "1rem",
-                flexShrink: 0,
-                width: "48px",
-              }}
-            >
-              {exp.date}
-            </span>
-            <span
-              style={{
                 color: "white",
-                fontSize: "1.1rem",
+                fontSize: "1.25rem",
                 flexShrink: 0,
+                paddingLeft: "20px",
               }}
             >
               {exp.company}
             </span>
             <span
               style={{
-                color: "rgba(255, 255, 255, 0.5)",
+                color: "rgba(255, 255, 255, 0.55)",
                 fontSize: "1rem",
                 textAlign: "right",
                 flex: 1,
+                paddingRight: "20px",
               }}
             >
-              {exp.role}
+              <mark className="about-highlight">{exp.role}</mark>
             </span>
           </div>
           <p
             style={{
               color: "rgba(255, 255, 255, 0.6)",
               marginTop: "6px",
-              marginLeft: "64px",
+              padding: "0 20px",
               lineHeight: "1.4",
-              fontSize: "0.95rem",
+              fontSize: "1rem",
             }}
           >
             {exp.description}
