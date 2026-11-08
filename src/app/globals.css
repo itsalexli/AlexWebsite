@@ -145,7 +145,7 @@ body::after {
   font-size: 0.85rem;
   font-style: normal;
   text-decoration: none;
-  vertical-align: 2px;
+  vertical-align: baseline;
   white-space: nowrap;
   transition: background-color 0.2s ease, color 0.2s ease;
 }

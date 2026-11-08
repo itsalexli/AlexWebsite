@@ -135,7 +135,7 @@ export default function Info() {
       )}
 
       <div
-        style={{ width: "100%", maxWidth: "560px", margin: "0 auto 4px" }}
+        style={{ width: "100%", maxWidth: "560px", margin: "0 auto" }}
       >
         <SectionHeader label="experience" />
       </div>
@@ -146,7 +146,7 @@ export default function Info() {
           onMouseEnter={() => handleExperienceEnter(index)}
           onMouseLeave={() => handleExperienceLeave()}
           style={{
-            padding: "18px 4px",
+            padding: "12px 4px",
             // Thin divider between entries (not above the first)
             borderTop:
               index > 0 ? "1px solid rgba(255, 255, 255, 0.1)" : "none",
@@ -174,7 +174,7 @@ export default function Info() {
             <span
               style={{
                 color: "white",
-                fontSize: "1.25rem",
+                fontSize: "1.2rem",
                 flexShrink: 0,
                 paddingLeft: "20px",
               }}
@@ -185,18 +185,19 @@ export default function Info() {
               style={{
                 color: "rgba(255, 255, 255, 0.55)",
                 fontSize: "1rem",
+                fontStyle: "italic",
                 textAlign: "right",
                 flex: 1,
                 paddingRight: "20px",
               }}
             >
-              <mark className="about-highlight">{exp.role}</mark>
+              {exp.role}
             </span>
           </div>
           <p
             style={{
               color: "rgba(255, 255, 255, 0.6)",
-              marginTop: "6px",
+              marginTop: "4px",
               padding: "0 20px",
               lineHeight: "1.4",
               fontSize: "1rem",
