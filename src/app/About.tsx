@@ -28,6 +28,18 @@ const setCursorHidden = (hidden: boolean) =>
 const NAME = "Alex 李";
 const NOUN = "(noun)";
 
+// Wrap Chinese characters so they can use a thinner CJK font than the Latin name
+const renderName = (text: string) =>
+  text.split(/([\u4e00-\u9fff]+)/).map((part, i) =>
+    /[\u4e00-\u9fff]/.test(part) ? (
+      <span key={i} className="name-cjk">
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
+
 export default function About() {
   const [nameCount, setNameCount] = useState(0);
   const [nounCount, setNounCount] = useState(0);
@@ -102,6 +114,7 @@ export default function About() {
     >
       {hoveredLink !== null && (
         <div
+          className="cursor-follower"
           style={{
             position: "fixed",
             left: mouse.x - 25,
@@ -129,29 +142,29 @@ export default function About() {
           <h1
             style={{
               fontSize: "4rem",
-              fontWeight: "700",
+              fontWeight: "500",
               lineHeight: "1.1",
               color: "#ffffff",
               letterSpacing: "-0.01em",
             }}
-            className="about-name"
+            className="about-name font-title"
           >
             {/* Typed part is visible; the rest is invisible so the layout never jumps */}
             <span className={typing ? "type-caret" : undefined}>
-              {NAME.slice(0, nameCount)}
+              {renderName(NAME.slice(0, nameCount))}
               {nameCount >= NAME.length && (
                 <>
                   {" "}
-                  <span style={{ fontStyle: "italic", fontWeight: "400" }}>
+                  <span className="font-title" style={{ fontWeight: "400" }}>
                     {NOUN.slice(0, nounCount)}
                   </span>
                 </>
               )}
             </span>
             <span style={{ visibility: "hidden" }} aria-hidden="true">
-              {NAME.slice(nameCount)}
+              {renderName(NAME.slice(nameCount))}
               {nameCount < NAME.length && " "}
-              <span style={{ fontStyle: "italic", fontWeight: "400" }}>
+              <span className="font-title" style={{ fontWeight: "400" }}>
                 {nameCount >= NAME.length ? NOUN.slice(nounCount) : NOUN}
               </span>
             </span>
@@ -188,11 +201,11 @@ export default function About() {
         <div className="about-definition-section intro-fade">
           <p
             style={{
-              fontSize: "1.4rem",
+              fontFamily: "var(--font-body)",
+              fontSize: "1.2rem",
               fontWeight: "400",
-              lineHeight: "1.5",
+              lineHeight: "1.6",
               color: "#e8eaed",
-              fontStyle: "italic",
               marginTop: "16px",
             }}
             className="about-definition"
@@ -212,6 +225,7 @@ export default function About() {
               target="_blank"
               rel="noopener noreferrer"
               className="about-source"
+              data-cursor-plain
             >
               <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
                 <circle cx="8" cy="8" r="8" fill="#81c995" />

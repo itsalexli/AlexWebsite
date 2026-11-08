@@ -101,6 +101,7 @@ export default function Info() {
       {/* Company Logo Cursor - Only shows when hovering over experience cards */}
       {isClient && hoveredExperience !== null && (
         <div
+          className="cursor-follower"
           style={{
             position: "fixed",
             left: mousePosition.x - 25,
@@ -191,7 +192,7 @@ export default function Info() {
               >
                 |
               </span>
-              <span style={{ fontSize: "1rem" }}>{exp.role}</span>
+              <span>{exp.role}</span>
             </span>
             <span
               style={{
@@ -211,9 +212,9 @@ export default function Info() {
               color: "rgba(255, 255, 255, 0.6)",
               marginTop: "4px",
               padding: "0 20px",
-              fontStyle: "italic",
-              lineHeight: "1.4",
-              fontSize: "1rem",
+              fontFamily: "var(--font-body)",
+              lineHeight: "1.5",
+              fontSize: "0.875rem",
             }}
           >
             {exp.description}

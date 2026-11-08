@@ -1,5 +1,26 @@
 @import "tailwindcss";
 
+/* Fonts: italic serif for titles, sans-serif for supporting text */
+:root {
+  --font-title: "Playfair Display", "Crimson Text", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+.font-title {
+  font-family: var(--font-title);
+  font-style: italic;
+}
+
+/* 李 in the name: light CJK serif, slanted to sit with the italic Latin letters
+   (Chinese fonts have no italic, so the slant is a skew) */
+.name-cjk {
+  display: inline-block;
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-style: normal;
+  font-weight: 400;
+  transform: skewX(-12deg);
+}
+
 /* Reset and Base Styles */
 * {
   margin: 0;
@@ -364,5 +385,12 @@ body::after {
   }
   to {
     transform: scale(0.22);
+  }
+}
+
+/* Touch screens: no custom cursor or cursor-following popups */
+@media (hover: none), (pointer: coarse) {
+  .cursor-follower {
+    display: none !important;
   }
 }

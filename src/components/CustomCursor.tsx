@@ -62,9 +62,10 @@ const CustomCursor: React.FC = () => {
     );
 
     // Track hover states for interactive elements
-    const interactiveElements = document.querySelectorAll(
-      'button, a, svg, [role="button"]'
-    );
+    // Elements inside [data-cursor-plain] (e.g. the resume chip) keep the small cursor
+    const interactiveElements = Array.from(
+      document.querySelectorAll('button, a, svg, [role="button"]')
+    ).filter((el) => !el.closest("[data-cursor-plain]"));
     interactiveElements.forEach((el) => {
       el.addEventListener("mouseenter", handleMouseEnter);
       el.addEventListener("mouseleave", handleMouseLeave);
@@ -104,6 +105,7 @@ const CustomCursor: React.FC = () => {
   // point, so size changes grow and shrink from the middle.
   return (
     <div
+      className="cursor-follower"
       style={{
         position: "fixed",
         left: 0,

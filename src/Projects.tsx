@@ -14,7 +14,7 @@ export default function Projects() {
       year: "2025",
       description: "Virtual web agent for the elderly ($4,500 winner)",
       image: "/Agely.jpg",
-      link: "https://devpost.com/software/agely",
+      link: "/agely",
     },
 
     {
@@ -33,6 +33,17 @@ export default function Projects() {
       description: "Open-source notation coding agent and interface",
       image: "/VibeCompose.jpg", // Using available images
       link: "https://github.com/itsalexli/vibecompoz",
+    },
+    {
+      id: 6,
+      title: "Wundr",
+      year: "2025",
+      description:
+        "AI game design studio for parents and kids to co-create educational games",
+      image: "/wundr-poster.webp",
+      // Looping animation; the image above shows while it loads
+      video: "/wundr-hero-loop.mp4",
+      link: "https://www.jiayihong.ca/wundr-case-study.html",
     },
     {
       id: 4,
@@ -130,15 +141,34 @@ export default function Projects() {
                   flex: 1,
                 }}
               >
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  style={{
-                    objectFit: "cover",
-                    transition: "opacity 0.3s ease",
-                  }}
-                />
+                {"video" in project && project.video ? (
+                  <video
+                    src={project.video}
+                    poster={project.image}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    aria-label={project.title}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    style={{
+                      objectFit: "cover",
+                      transition: "opacity 0.3s ease",
+                    }}
+                  />
+                )}
                 {/* Vignette overlay - covering all edges */}
                 <div
                   style={{

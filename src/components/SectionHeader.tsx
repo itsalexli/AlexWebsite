@@ -13,6 +13,7 @@ export default function SectionHeader({ label }: { label: string }) {
       <span
         style={{
           color: "rgba(255, 255, 255, 0.5)",
+          fontFamily: "var(--font-title)",
           fontStyle: "italic",
           fontSize: "1rem",
           whiteSpace: "nowrap",
