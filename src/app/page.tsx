@@ -29,14 +29,14 @@ const HomePage: React.FC = () => {
         <div style={{ flex: 1, minWidth: 0 }}>
           <About />
         </div>
-        <div style={{ flex: 1, minWidth: 0 }} className="info-column">
+        <div style={{ flex: 1, minWidth: 0 }} className="info-column intro-fade">
           <Info />
         </div>
       </div>
 
       <div
         style={{ paddingTop: "0px", paddingBottom: "50px" }}
-        className="projects-section"
+        className="projects-section intro-fade"
       >
         <Projects />
       </div>

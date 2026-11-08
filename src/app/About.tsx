@@ -24,7 +24,42 @@ const setCursorHidden = (hidden: boolean) =>
   );
 
 // Dictionary-style intro, modeled on a search-result definition card.
+// Intro animation: type the name, pause, type "(noun)", then fade in the rest
+const NAME = "Alex 李";
+const NOUN = "(noun)";
+
 export default function About() {
+  const [nameCount, setNameCount] = useState(0);
+  const [nounCount, setNounCount] = useState(0);
+  const typing = nounCount < NOUN.length;
+
+  useEffect(() => {
+    const reveal = () => {
+      document.documentElement.dataset.intro = "done";
+    };
+    // Skip the animation for people who prefer reduced motion
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setNameCount(NAME.length);
+      setNounCount(NOUN.length);
+      reveal();
+      return;
+    }
+
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let t = 150;
+    for (let i = 1; i <= NAME.length; i++) {
+      t += 60;
+      timers.push(setTimeout(() => setNameCount(i), t));
+    }
+    t += 220; // short pause before "(noun)"
+    for (let i = 1; i <= NOUN.length; i++) {
+      t += 40;
+      timers.push(setTimeout(() => setNounCount(i), t));
+    }
+    timers.push(setTimeout(reveal, t + 80));
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
   // Hover popup for contact links: same grow/shrink behaviour as company logos
   const [hoveredLink, setHoveredLink] = useState<number | null>(null);
   const [isClosing, setIsClosing] = useState(false);
@@ -101,9 +136,24 @@ export default function About() {
             }}
             className="about-name"
           >
-            Alex 李{" "}
-            <span style={{ fontStyle: "italic", fontWeight: "400" }}>
-              (noun)
+            {/* Typed part is visible; the rest is invisible so the layout never jumps */}
+            <span className={typing ? "type-caret" : undefined}>
+              {NAME.slice(0, nameCount)}
+              {nameCount >= NAME.length && (
+                <>
+                  {" "}
+                  <span style={{ fontStyle: "italic", fontWeight: "400" }}>
+                    {NOUN.slice(0, nounCount)}
+                  </span>
+                </>
+              )}
+            </span>
+            <span style={{ visibility: "hidden" }} aria-hidden="true">
+              {NAME.slice(nameCount)}
+              {nameCount < NAME.length && " "}
+              <span style={{ fontStyle: "italic", fontWeight: "400" }}>
+                {nameCount >= NAME.length ? NOUN.slice(nounCount) : NOUN}
+              </span>
             </span>
           </h1>
           <p
@@ -112,7 +162,7 @@ export default function About() {
               color: "#9aa0a6",
               marginTop: "6px",
             }}
-            className="about-pronunciation"
+            className="about-pronunciation intro-fade"
           >
             /ˈaləks ˈlē/
             <span style={{ marginLeft: "8px" }} className="about-links">
@@ -135,7 +185,7 @@ export default function About() {
           </p>
         </div>
 
-        <div className="about-definition-section">
+        <div className="about-definition-section intro-fade">
           <p
             style={{
               fontSize: "1.4rem",
@@ -143,23 +193,22 @@ export default function About() {
               lineHeight: "1.5",
               color: "#e8eaed",
               fontStyle: "italic",
-              marginTop: "12px",
+              marginTop: "16px",
             }}
             className="about-definition"
           >
             <strong>1.</strong>{" "}
             <mark className="about-highlight">
-              CS &amp; Business student at Western/Ivey passionate about
-              software and product
-            </mark>
-            . <strong>2.</strong>{" "}
-            <mark className="about-highlight">
-              Currently organizing Hack Western, running tech events, shooting
-              hoops
-            </mark>
-            .{" "}
+              Dual degree CS &amp; Business
+            </mark>{" "}
+            student at Western University &amp; Ivey Business School.{" "}
+            <strong>2.</strong> Passionate about{" "}
+            <mark className="about-highlight">building cool software</mark> and
+            products. <strong>3.</strong> Currently organizing{" "}
+            <mark className="about-highlight">Hack Western</mark>, running tech
+            events, shooting hoops.{" "}
             <a
-              href="https://www.linkedin.com/in/alexyouli/"
+              href="https://drive.google.com/file/d/1U7dKCAM_Z0UPll5qTfGnNhBpXXAlNV2v/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="about-source"
@@ -175,7 +224,7 @@ export default function About() {
                   strokeLinejoin="round"
                 />
               </svg>
-              LinkedIn +2
+              Resume +2
             </a>
           </p>
 

@@ -61,18 +61,21 @@ export default function Info() {
   const experiences = [
     {
       company: "IBM",
+      year: "2026",
       role: "AI Engineer Intern",
       description: "Digital product engineering for enterprise clients.",
       logo: "/ibm.png",
     },
     {
       company: "Turing",
+      year: "2026",
       role: "Software Engineer Intern",
       description: "AI internal tooling development, QA & loss analysis.",
       logo: "/turinglogo.png",
     },
     {
       company: "CIBC",
+      year: "2025",
       role: "Software Engineer Intern",
       description: "Automated money movement for high-volume transfers.",
       logo: "/cibclogo.png",
@@ -175,23 +178,32 @@ export default function Info() {
               style={{
                 color: "white",
                 fontSize: "1.2rem",
-                flexShrink: 0,
+                minWidth: 0,
                 paddingLeft: "20px",
               }}
             >
               {exp.company}
+              <span
+                style={{
+                  color: "rgba(255, 255, 255, 0.35)",
+                  margin: "0 10px",
+                }}
+              >
+                |
+              </span>
+              <span style={{ fontSize: "1rem" }}>{exp.role}</span>
             </span>
             <span
               style={{
                 color: "rgba(255, 255, 255, 0.55)",
                 fontSize: "1rem",
-                fontStyle: "italic",
                 textAlign: "right",
                 flex: 1,
+                flexShrink: 0,
                 paddingRight: "20px",
               }}
             >
-              {exp.role}
+              {exp.year}
             </span>
           </div>
           <p
@@ -199,6 +211,7 @@ export default function Info() {
               color: "rgba(255, 255, 255, 0.6)",
               marginTop: "4px",
               padding: "0 20px",
+              fontStyle: "italic",
               lineHeight: "1.4",
               fontSize: "1rem",
             }}

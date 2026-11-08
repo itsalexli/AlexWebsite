@@ -52,6 +52,36 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* Load-in: everything except the name starts hidden, then fades in */
+.intro-fade {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+[data-intro="done"] .intro-fade {
+  opacity: 1;
+  transform: none;
+}
+
+/* Blinking caret while the name is being typed */
+.type-caret::after {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 0.9em;
+  margin-left: 4px;
+  vertical-align: -0.08em;
+  background-color: currentColor;
+  animation: caretBlink 0.5s steps(1) infinite;
+}
+
+@keyframes caretBlink {
+  50% {
+    opacity: 0;
+  }
+}
+
 /* Hide cursor globally */
 *,
 *::before,
@@ -123,7 +153,7 @@ body::after {
   color: #ffffff;
 }
 
-/* Intro definition: soft search-style highlight */
+/* Intro definition: soft search-style highlight on key phrases */
 .about-highlight {
   background-color: rgba(88, 120, 230, 0.2);
   color: inherit;
@@ -145,7 +175,7 @@ body::after {
   font-size: 0.85rem;
   font-style: normal;
   text-decoration: none;
-  vertical-align: baseline;
+  vertical-align: -2px;
   white-space: nowrap;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
