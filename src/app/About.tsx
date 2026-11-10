@@ -107,8 +107,7 @@ export default function About() {
     <div
       style={{
         padding: "40px 20px",
-        fontFamily:
-          '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
+        fontFamily: "var(--font-body)",
       }}
       className="about-container"
     >
@@ -171,11 +170,11 @@ export default function About() {
           </h1>
           <p
             style={{
-              fontSize: "1.25rem",
+              fontSize: "1rem",
               color: "#9aa0a6",
               marginTop: "6px",
             }}
-            className="about-pronunciation intro-fade"
+            className="about-pronunciation font-subheading intro-fade"
           >
             /ˈaləks ˈlē/
             <span style={{ marginLeft: "8px" }} className="about-links">

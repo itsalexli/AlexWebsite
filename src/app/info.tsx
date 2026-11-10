@@ -89,8 +89,7 @@ export default function Info() {
         display: "flex",
         flexDirection: "column",
         gap: "0px",
-        fontFamily:
-          '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
+        fontFamily: "var(--font-body)",
         width: "100%",
         maxWidth: "600px",
         margin: "0 auto",
@@ -178,7 +177,8 @@ export default function Info() {
             <span
               style={{
                 color: "white",
-                fontSize: "1.2rem",
+                fontSize: "1rem",
+                fontWeight: 500,
                 minWidth: 0,
                 paddingLeft: "20px",
               }}
@@ -192,12 +192,14 @@ export default function Info() {
               >
                 |
               </span>
-              <span>{exp.role}</span>
+              <span style={{ fontWeight: 400, color: "rgba(255, 255, 255, 0.75)" }}>
+                {exp.role}
+              </span>
             </span>
             <span
               style={{
                 color: "rgba(255, 255, 255, 0.55)",
-                fontSize: "1rem",
+                fontSize: "0.875rem",
                 textAlign: "right",
                 flex: 1,
                 flexShrink: 0,

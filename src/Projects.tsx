@@ -62,8 +62,7 @@ export default function Projects() {
         padding: "0px 0px",
         maxWidth: "1400px",
         margin: "0 auto",
-        fontFamily:
-          '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
+        fontFamily: "var(--font-body)",
       }}
     >
       <div style={{ padding: "0px 40px", marginBottom: "24px" }} className="projects-header">
@@ -195,7 +194,8 @@ export default function Projects() {
               >
                 <p
                   style={{
-                    fontSize: "1.4rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "1.15rem",
                     color: "rgba(255, 255, 255, 0.9)",
                     lineHeight: "1.4",
                     margin: "0 0 6px 0",
@@ -207,7 +207,8 @@ export default function Projects() {
                 </p>
                 <h3
                   style={{
-                    fontSize: "1.1rem",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.9rem",
                     fontWeight: "400",
                     color: "rgba(255, 255, 255, 0.5)",
                     margin: "0",

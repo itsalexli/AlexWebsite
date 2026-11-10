@@ -1,4 +1,4 @@
-// "# label ———" heading: italic grey label followed by a thin rule.
+// "# label ———" heading: grey Playfair label followed by a thin rule.
 export default function SectionHeader({ label }: { label: string }) {
   return (
     <div
@@ -11,10 +11,9 @@ export default function SectionHeader({ label }: { label: string }) {
       className="section-header"
     >
       <span
+        className="font-subheading"
         style={{
           color: "rgba(255, 255, 255, 0.5)",
-          fontFamily: "var(--font-title)",
-          fontStyle: "italic",
           fontSize: "1rem",
           whiteSpace: "nowrap",
         }}

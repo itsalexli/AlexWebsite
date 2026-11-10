@@ -134,8 +134,7 @@ const CustomCursor: React.FC = () => {
           overflow: "hidden",
           whiteSpace: "nowrap",
           fontSize: "12px",
-          fontFamily:
-            '"Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif',
+          fontFamily: "var(--font-body)",
           color: "black",
           fontWeight: "500",
           transition: "width 0.15s ease, height 0.15s ease",

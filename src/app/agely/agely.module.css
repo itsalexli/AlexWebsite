@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  font-family: "Crimson Text", "Times New Roman", "Georgia", "Playfair Display", serif;
+  font-family: var(--font-body);
   color: #e8eaed;
 }
 
@@ -20,7 +20,7 @@
 .topLink {
   color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   transition: color 0.2s ease;
 }
 
@@ -44,8 +44,8 @@
 }
 
 .subtitle {
-  margin-top: 6px;
-  font-size: 1.15rem;
+  margin-top: 8px;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -78,7 +78,7 @@
 }
 
 .metaLabel {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #ffffff;
   margin: 0 0 6px;
@@ -89,7 +89,7 @@
 }
 
 .metaText {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.6);
   margin-bottom: 12px;
@@ -97,7 +97,7 @@
 
 .metaList {
   list-style: none;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -109,6 +109,8 @@
 }
 
 .sectionTitle {
+  font-family: var(--font-title);
+  font-style: italic;
   font-size: 2rem;
   font-weight: 400;
   color: #ffffff;
@@ -116,7 +118,7 @@
 }
 
 .body {
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.55);
   margin-bottom: 18px;
@@ -135,21 +137,21 @@
 }
 
 .pillarTitle {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
   margin-bottom: 6px;
 }
 
 .pillarBody {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.55);
 }
 
 .bulletList {
   padding-left: 1.2em;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.55);
 }
@@ -189,6 +191,6 @@
 
   .body,
   .bulletList {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }
