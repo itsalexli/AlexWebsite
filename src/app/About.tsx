@@ -140,7 +140,7 @@ export default function About() {
         <div className="about-name-section">
           <h1
             style={{
-              fontSize: "4rem",
+              fontSize: "4.5rem",
               fontWeight: "500",
               lineHeight: "1.1",
               color: "#ffffff",
@@ -170,7 +170,7 @@ export default function About() {
           </h1>
           <p
             style={{
-              fontSize: "1rem",
+              fontSize: "1.25rem",
               color: "#9aa0a6",
               marginTop: "6px",
             }}
@@ -201,7 +201,7 @@ export default function About() {
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: "1.2rem",
+              fontSize: "1.05rem",
               fontWeight: "400",
               lineHeight: "1.6",
               color: "#e8eaed",
@@ -213,10 +213,13 @@ export default function About() {
             <mark className="about-highlight">
               Dual degree CS &amp; Business
             </mark>{" "}
-            student at Western University &amp; Ivey Business School.{" "}
+            student at Western University &amp; Ivey Business School.
+            <br />
             <strong>2.</strong> Passionate about{" "}
             <mark className="about-highlight">building cool software</mark> and
-            products. <strong>3.</strong> Currently organizing{" "}
+            impactful products.
+            <br />
+            <strong>3.</strong> Currently organizing{" "}
             <mark className="about-highlight">Hack Western</mark>, running tech
             events, shooting hoops.{" "}
             <a

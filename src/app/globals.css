@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
-/* Fonts: titles are Playfair Display italic, subheadings are Playfair upright; everything else is Inter */
+/* Fonts: titles are Playfair Display italic, subheadings are Crimson Text; everything else is Inter */
 :root {
   --font-title: "Playfair Display", Georgia, serif;
+  --font-subheading: "Crimson Text", "Times New Roman", Georgia, serif;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
 }
 
@@ -11,9 +12,9 @@
   font-style: italic;
 }
 
-/* Subheadings (pronunciation, contact links, section labels): upright Playfair */
+/* Subheadings (pronunciation, contact links) */
 .font-subheading {
-  font-family: var(--font-title);
+  font-family: var(--font-subheading);
   font-style: normal;
 }
 
@@ -90,6 +91,15 @@ body::after {
   transform: none;
 }
 
+/* Reveal order after the name: definition, then experience, then the rest */
+[data-intro="done"] .info-column.intro-fade {
+  transition-delay: 0.35s;
+}
+
+[data-intro="done"] .projects-section.intro-fade {
+  transition-delay: 0.7s;
+}
+
 /* Blinking caret while the name is being typed */
 .type-caret::after {
   content: "";
@@ -148,8 +158,8 @@ body::after {
   }
 }
 
-/* Focus styles for keyboard navigation */
-*:focus {
+/* Focus outline for keyboard navigation only (not shown after a mouse click) */
+*:focus-visible {
   outline: 2px solid #283dfc;
   outline-offset: 2px;
 }
@@ -211,18 +221,62 @@ body::after {
   color: #ffffff;
 }
 
-/* Desktop: start the experience list level with the top of the name */
-.info-column {
-  padding-top: 54px;
+/* Desktop: the top row and the projects grid share one content width,
+   so the intro starts on the same left edge as the projects below.
+   The company list follows the intro rather than the right edge. */
+:root {
+  --content-width: 1100px;
+}
+
+@media (min-width: 769px) {
+  .main-layout {
+    max-width: calc(var(--content-width) + 40px) !important;
+    justify-content: flex-start;
+    align-items: flex-start !important;
+    gap: 80px !important;
+  }
+
+  /* Wide enough for the intro to wrap onto 3 lines */
+  .about-column {
+    flex: 0 1 720px !important;
+  }
+
+  /* Side padding would push the text in from the shared edge */
+  .about-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Extra room in the checklist so its last line ends level with the
+     bottom of the Autumn tile (the top already matches the IBM tile) */
+  .about-definition {
+    line-height: 1.8 !important;
+    margin-top: 31px !important;
+  }
+
+  /* Drop the list so the top of the IBM tile lines up with the top of
+     "Alex" (intro padding + the title's line spacing). Re-measure if the
+     title size changes. */
+  .info-column {
+    flex: 0 0 auto !important;
+    padding-top: 58px;
+  }
+
+  .info-container {
+    padding-bottom: 0 !important;
+  }
+
+  .projects-grid {
+    max-width: calc(var(--content-width) + 40px);
+    margin: 0 auto;
+    padding: 0 20px !important;
+    box-sizing: border-box;
+  }
 }
 
 @media (max-width: 768px) {
   .info-column {
-    padding-top: 0;
-  }
-
-  .projects-header {
-    padding: 0 20px !important;
+    width: 100%;
   }
 
   .main-layout {
@@ -288,16 +342,8 @@ body::after {
   /* Info section mobile styles */
   .info-container {
     padding: 0 !important;
+    width: auto !important;
     margin: 0 20px !important;
-  }
-
-  .info-experience-card {
-    width: calc(100vw - 80px) !important;
-    max-width: calc(100% - 0px) !important;
-    margin: 0 !important;
-    padding: 10px !important;
-    gap: 10px !important;
-    box-sizing: border-box !important;
   }
 
   /* Add space between info and projects on mobile */
@@ -307,10 +353,6 @@ body::after {
 }
 
 @media (max-width: 480px) {
-  .projects-header {
-    padding: 0 15px !important;
-  }
-
   .main-layout {
     padding-left: 15px !important;
     padding-right: 15px !important;
@@ -355,16 +397,8 @@ body::after {
   /* Info section small mobile styles */
   .info-container {
     padding: 0 !important;
+    width: auto !important;
     margin: 0 15px !important;
-  }
-
-  .info-experience-card {
-    width: calc(100vw - 60px) !important;
-    max-width: calc(100% - 0px) !important;
-    margin: 0 !important;
-    padding: 8px !important;
-    gap: 8px !important;
-    box-sizing: border-box !important;
   }
 
   /* Add space between info and projects on small mobile */
@@ -398,4 +432,14 @@ body::after {
   .cursor-follower {
     display: none !important;
   }
+}
+
+/* "Previously at" logo tiles: slightly dimmed until the row is hovered */
+.company-tile {
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.company-row:hover .company-tile {
+  opacity: 1;
 }

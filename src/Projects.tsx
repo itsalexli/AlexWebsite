@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import SectionHeader from "./components/SectionHeader";
 
 export default function Projects() {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
@@ -65,10 +64,6 @@ export default function Projects() {
         fontFamily: "var(--font-body)",
       }}
     >
-      <div style={{ padding: "0px 40px", marginBottom: "24px" }} className="projects-header">
-        <SectionHeader label="selected work" />
-      </div>
-
       {/* Projects Grid */}
       <div
         style={{

@@ -1,94 +1,63 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import SectionHeader from "../components/SectionHeader";
+
+type Experience = {
+  company: string;
+  role: string;
+  // Company website, opened in a new tab when the row is clicked
+  url: string;
+  logo: string;
+  // Tile colour behind the logo
+  tileColor: string;
+  // Space around the logo inside the tile (0 = logo fills the tile)
+  logoPadding: number;
+  // Recolour a dark logo to white so it reads on a coloured tile
+  whiteLogo?: boolean;
+};
+
+const experiences: Experience[] = [
+  {
+    company: "IBM",
+    role: "AI Engineer Intern",
+    url: "https://www.ibm.com",
+    logo: "/ibm-tile.png",
+    tileColor: "#ffffff",
+    logoPadding: 0,
+  },
+  {
+    company: "Turing",
+    role: "Software Engineer Intern",
+    url: "https://www.turing.com",
+    logo: "/turing-tile.png",
+    tileColor: "#000000",
+    logoPadding: 0,
+  },
+  {
+    company: "CIBC",
+    role: "Software Engineer Intern",
+    url: "https://www.cibc.com",
+    logo: "/cibc-tile.png",
+    tileColor: "#f2f2f2",
+    logoPadding: 0,
+  },
+  {
+    company: "Autumn",
+    role: "Product Engineer Intern",
+    url: "https://www.autumn.co",
+    logo: "/autumnlogo1.png",
+    tileColor: "#f7f5ef",
+    logoPadding: 0,
+  },
+];
 
 export default function Info() {
-  const [hoveredExperience, setHoveredExperience] = useState<number | null>(
-    null
-  );
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isClient, setIsClient] = useState(false);
-  // True while the logo popup is shrinking away after the mouse leaves
-  const [isClosing, setIsClosing] = useState(false);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
-
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    document.addEventListener("mousemove", updateMousePosition);
-
-    return () => {
-      document.removeEventListener("mousemove", updateMousePosition);
-    };
-  }, [isClient]);
-
-  const handleExperienceEnter = (index: number) => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setIsClosing(false);
-    setHoveredExperience(index);
-    // Hide custom cursor component
-    document.dispatchEvent(
-      new CustomEvent("experienceHover", {
-        detail: { isHovering: true },
-      })
-    );
-  };
-
-  const handleExperienceLeave = () => {
-    // Let the logo shrink first, then hand back to the custom cursor
-    setIsClosing(true);
-    closeTimer.current = setTimeout(() => {
-      setHoveredExperience(null);
-      setIsClosing(false);
-      document.dispatchEvent(
-        new CustomEvent("experienceHover", {
-          detail: { isHovering: false },
-        })
-      );
-    }, 150);
-  };
-
-  const experiences = [
-    {
-      company: "IBM",
-      year: "2026",
-      role: "AI Engineer Intern",
-      description: "Digital product engineering for enterprise clients.",
-      logo: "/ibm.png",
-    },
-    {
-      company: "Turing",
-      year: "2026",
-      role: "Software Engineer Intern",
-      description: "AI internal tooling development, QA & loss analysis.",
-      logo: "/turinglogo.png",
-    },
-    {
-      company: "CIBC",
-      year: "2025",
-      role: "Software Engineer Intern",
-      description: "Automated money movement for high-volume transfers.",
-      logo: "/cibclogo.png",
-    },
-  ];
-
   return (
     <div
       className="info-container"
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "0px",
         fontFamily: "var(--font-body)",
         width: "100%",
         maxWidth: "600px",
@@ -97,132 +66,75 @@ export default function Info() {
         boxSizing: "border-box",
       }}
     >
-      {/* Company Logo Cursor - Only shows when hovering over experience cards */}
-      {isClient && hoveredExperience !== null && (
-        <div
-          className="cursor-follower"
-          style={{
-            position: "fixed",
-            left: mousePosition.x - 25,
-            top: mousePosition.y - 25,
-            width: "50px",
-            height: "50px",
-            pointerEvents: "none",
-            zIndex: 9999,
-            backgroundColor: "#ffffff",
-            borderRadius: "0",
-            border: "2px solid #ffffff",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-            padding: "4px",
-            transformOrigin: "center",
-            animation: isClosing
-              ? "logoShrink 0.15s ease-in forwards"
-              : "logoGrow 0.15s ease-out",
-          }}
-        >
-          <Image
-            src={experiences[hoveredExperience].logo}
-            alt={`${experiences[hoveredExperience].company} logo`}
-            width={
-              experiences[hoveredExperience].company === "IBM" ? 32 : 40
-            }
-            height={
-              experiences[hoveredExperience].company === "IBM" ? 32 : 40
-            }
-            style={{ objectFit: "contain" }}
-          />
-        </div>
-      )}
-
+      {/* Logo tile + company + role, one row per company */}
       <div
-        style={{ width: "100%", maxWidth: "560px", margin: "0 auto" }}
+        style={{
+          width: "100%",
+          maxWidth: "560px",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+        }}
       >
-        <SectionHeader label="experience" />
-      </div>
-
-      {experiences.map((exp, index) => (
-        <div
-          key={index}
-          onMouseEnter={() => handleExperienceEnter(index)}
-          onMouseLeave={() => handleExperienceLeave()}
-          style={{
-            padding: "12px 4px",
-            // Thin divider between entries (not above the first)
-            borderTop:
-              index > 0 ? "1px solid rgba(255, 255, 255, 0.1)" : "none",
-            width: "100%",
-            maxWidth: "560px",
-            margin: "0 auto",
-            backgroundColor:
-              hoveredExperience === index
-                ? "rgba(255, 255, 255, 0.05)"
-                : "transparent",
-            transition: "background-color 0.3s ease",
-            cursor: "none",
-            boxSizing: "border-box",
-          }}
-          className="info-experience-card"
-        >
-          <div
+        {experiences.map((exp) => (
+          <a
+            key={exp.company}
+            href={exp.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="company-row"
+            data-cursor-plain
             style={{
               display: "flex",
-              flexDirection: "row",
-              alignItems: "baseline",
+              alignItems: "center",
               gap: "16px",
+              textDecoration: "none",
+              color: "inherit",
             }}
           >
-            <span
+            <div
+              className="company-tile"
               style={{
-                color: "white",
-                fontSize: "1rem",
-                fontWeight: 500,
-                minWidth: 0,
-                paddingLeft: "20px",
+                position: "relative",
+                width: "44px",
+                height: "44px",
+                flexShrink: 0,
+                borderRadius: "8px",
+                overflow: "hidden",
+                backgroundColor: exp.tileColor,
               }}
             >
-              {exp.company}
-              <span
+              <Image
+                src={exp.logo}
+                alt={`${exp.company} logo`}
+                fill
+                sizes="44px"
                 style={{
-                  color: "rgba(255, 255, 255, 0.35)",
-                  margin: "0 10px",
+                  objectFit: "contain",
+                  padding: `${exp.logoPadding}px`,
+                  filter: exp.whiteLogo ? "brightness(0) invert(1)" : undefined,
                 }}
-              >
-                |
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                minWidth: 0,
+                lineHeight: 1.375,
+              }}
+            >
+              <span style={{ color: "#e4e4e7", fontSize: "1rem", fontWeight: 600 }}>
+                {exp.company}
               </span>
-              <span style={{ fontWeight: 400, color: "rgba(255, 255, 255, 0.75)" }}>
+              <span style={{ color: "#a1a1aa", fontSize: "0.875rem" }}>
                 {exp.role}
               </span>
-            </span>
-            <span
-              style={{
-                color: "rgba(255, 255, 255, 0.55)",
-                fontSize: "0.875rem",
-                textAlign: "right",
-                flex: 1,
-                flexShrink: 0,
-                paddingRight: "20px",
-              }}
-            >
-              {exp.year}
-            </span>
-          </div>
-          <p
-            style={{
-              color: "rgba(255, 255, 255, 0.6)",
-              marginTop: "4px",
-              padding: "0 20px",
-              fontFamily: "var(--font-body)",
-              lineHeight: "1.5",
-              fontSize: "0.875rem",
-            }}
-          >
-            {exp.description}
-          </p>
-        </div>
-      ))}
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   );
 }

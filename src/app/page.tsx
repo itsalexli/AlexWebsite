@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
         }}
         className="main-layout"
       >
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ flex: 1, minWidth: 0 }} className="about-column">
           <About />
         </div>
         <div style={{ flex: 1, minWidth: 0 }} className="info-column intro-fade">

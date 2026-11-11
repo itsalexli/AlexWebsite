@@ -22,8 +22,14 @@ const CustomCursor: React.FC = () => {
       setCursorPosition({ x: e.clientX, y: e.clientY });
     };
 
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
+    // Grow over links and buttons, except inside [data-cursor-plain]
+    // (e.g. the resume chip and company rows). Checked on every mouseover
+    // so it stays right when elements are added or re-rendered.
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as Element | null;
+      const interactive = target?.closest('button, a, svg, [role="button"]');
+      setIsHovering(!!interactive && !interactive.closest("[data-cursor-plain]"));
+    };
 
     const handleExperienceHover = (e: CustomEvent) => {
       if (e.detail.isHovering) {
@@ -61,15 +67,7 @@ const CustomCursor: React.FC = () => {
       handleProjectHover as EventListener
     );
 
-    // Track hover states for interactive elements
-    // Elements inside [data-cursor-plain] (e.g. the resume chip) keep the small cursor
-    const interactiveElements = Array.from(
-      document.querySelectorAll('button, a, svg, [role="button"]')
-    ).filter((el) => !el.closest("[data-cursor-plain]"));
-    interactiveElements.forEach((el) => {
-      el.addEventListener("mouseenter", handleMouseEnter);
-      el.addEventListener("mouseleave", handleMouseLeave);
-    });
+    document.addEventListener("mouseover", handleMouseOver, { passive: true });
 
     return () => {
       document.removeEventListener("mousemove", updateMousePosition);
@@ -81,10 +79,7 @@ const CustomCursor: React.FC = () => {
         "projectHover",
         handleProjectHover as EventListener
       );
-      interactiveElements.forEach((el) => {
-        el.removeEventListener("mouseenter", handleMouseEnter);
-        el.removeEventListener("mouseleave", handleMouseLeave);
-      });
+      document.removeEventListener("mouseover", handleMouseOver);
     };
   }, [isClient]);
 
