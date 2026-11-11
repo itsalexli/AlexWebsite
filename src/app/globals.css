@@ -199,6 +199,128 @@ body::after {
   box-decoration-break: clone;
 }
 
+/* Clickable highlight (opens a site preview) */
+.about-highlight-link {
+  transition: background-color 0.15s ease;
+}
+.about-highlight-link:hover,
+.about-highlight-link:focus-visible {
+  background-color: rgba(88, 120, 230, 0.4);
+  outline: none;
+}
+
+/* Site preview modal */
+.site-preview-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: previewFade 0.15s ease-out;
+}
+/* Native cursor while the preview is open (custom cursor can't enter the iframe) */
+html[data-preview="open"] .site-preview-backdrop,
+html[data-preview="open"] .site-preview-backdrop * {
+  cursor: auto !important;
+}
+html[data-preview="open"] .site-preview-action {
+  cursor: pointer !important;
+}
+.site-preview {
+  width: min(1100px, 100%);
+  height: min(720px, 100%);
+  display: flex;
+  flex-direction: column;
+  background: #202124;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: previewGrow 0.18s ease-out;
+}
+.site-preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+.site-preview-url {
+  flex: 1;
+  color: #9aa0a6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.site-preview-action {
+  background: none;
+  border: none;
+  color: #e8eaed;
+  font: inherit;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.site-preview-action:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.site-preview-frame {
+  flex: 1;
+  width: 100%;
+  border: 0;
+  background: #fff;
+}
+/* Photo set inside the preview modal */
+.photo-preview {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+}
+.photo-preview img {
+  flex: 1 1 0;
+  min-width: 0;
+  height: auto;
+  /* Keep a single tall photo inside the window (bar + padding ≈ 110px) */
+  max-height: calc(100vh - 110px);
+  object-fit: contain;
+  border-radius: 8px;
+  display: block;
+}
+/* Photos sit side by side, so shrink the modal to fit them */
+.site-preview:has(.photo-preview) {
+  height: auto;
+  max-height: 100%;
+}
+/* Narrow screens: stack the photos */
+@media (max-width: 640px) {
+  .photo-preview {
+    flex-direction: column;
+  }
+  .photo-preview img {
+    flex: none;
+    width: 100%;
+  }
+}
+@keyframes previewFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes previewGrow {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 /* Small source chip at the end of the definition */
 .about-source {
   display: inline-flex;
@@ -236,9 +358,10 @@ body::after {
     gap: 80px !important;
   }
 
-  /* Wide enough for the intro to wrap onto 3 lines */
+  /* Wide enough for the intro to wrap onto 3 lines, with the resume
+     chip still on the last line after the clickable highlights */
   .about-column {
-    flex: 0 1 720px !important;
+    flex: 0 1 740px !important;
   }
 
   /* Side padding would push the text in from the shared edge */

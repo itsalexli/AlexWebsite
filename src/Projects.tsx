@@ -3,10 +3,30 @@
 import { useState } from "react";
 import Image from "next/image";
 
+// Tileable noise texture for a film-grain overlay
+const GRAIN = `url("data:image/svg+xml,${encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>'
+)}")`;
+
 export default function Projects() {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
 
   const projects = [
+    {
+      id: 7,
+      title: "IBM",
+      year: "2026",
+      description: "Real-time messaging platform for pro sports fans",
+      // No poster frame yet; the video plays as soon as it loads
+      image: "",
+      video: "/ibm-hype.mp4",
+      // The video is a white logo on a dark background; it's screen-blended
+      // over this gradient so the dark parts take on IBM blue/purple
+      tint:
+        "radial-gradient(circle at 20% 15%, #4589ff 0%, transparent 55%), radial-gradient(circle at 85% 90%, #a56eff 0%, transparent 55%), linear-gradient(135deg, #0f2a7a, #2a1460)",
+      grain: true,
+      link: "https://www.ibm.com/",
+    },
     {
       id: 1,
       title: "Agely",
@@ -15,16 +35,6 @@ export default function Projects() {
       image: "/Agely.jpg",
       link: "/agely",
     },
-
-    {
-      id: 2,
-      title: "CIBC",
-      year: "2025",
-      description: "Building CIBC's mobile banking app with 9M+ users",
-      image: "/CIBC3.jpg",
-      link: "https://apps.apple.com/ca/app/cibc-mobile-banking/id351448953",
-    },
-
     {
       id: 3,
       title: "Vibe Compose",
@@ -45,6 +55,14 @@ export default function Projects() {
       link: "https://www.jiayihong.ca/wundr-case-study.html",
     },
     {
+      id: 2,
+      title: "CIBC",
+      year: "2025",
+      description: "Building CIBC's mobile banking app with 9M+ users",
+      image: "/CIBC3.jpg",
+      link: "https://apps.apple.com/ca/app/cibc-mobile-banking/id351448953",
+    },
+    {
       id: 4,
       title: "Autumn",
       year: "2024",
@@ -52,7 +70,6 @@ export default function Projects() {
       image: "/autumnimage.jpg",
       link: "https://www.autumn.co/",
     },
-
   ];
 
   return (
@@ -133,12 +150,13 @@ export default function Projects() {
                   position: "relative",
                   width: "100%",
                   flex: 1,
+                  background: "tint" in project ? project.tint : undefined,
                 }}
               >
                 {"video" in project && project.video ? (
                   <video
                     src={project.video}
-                    poster={project.image}
+                    poster={project.image || undefined}
                     autoPlay
                     loop
                     muted
@@ -150,6 +168,7 @@ export default function Projects() {
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
+                      mixBlendMode: "tint" in project ? "screen" : undefined,
                     }}
                   />
                 ) : (
@@ -160,6 +179,22 @@ export default function Projects() {
                     style={{
                       objectFit: "cover",
                       transition: "opacity 0.3s ease",
+                    }}
+                  />
+                )}
+                {/* Film grain over the cover */}
+                {"grain" in project && project.grain && (
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      backgroundImage: GRAIN,
+                      backgroundSize: "180px 180px",
+                      mixBlendMode: "overlay",
+                      opacity: 0.45,
+                      pointerEvents: "none",
+                      zIndex: 1,
                     }}
                   />
                 )}

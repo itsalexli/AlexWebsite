@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   GitHubIcon,
   LinkedInIcon,
@@ -22,6 +22,75 @@ const setCursorHidden = (hidden: boolean) =>
   document.dispatchEvent(
     new CustomEvent("experienceHover", { detail: { isHovering: hidden } })
   );
+
+// Things that open in the preview modal: either an embedded site/file
+// (`src` is embedded, `href` opens in a new tab) or a set of photos
+type Preview =
+  | { kind: "site"; label: string; src: string; href: string }
+  | { kind: "photos"; label: string; images: { src: string; alt: string }[] };
+
+const HACK_WESTERN: Preview = {
+  kind: "site",
+  label: "hackwestern.com",
+  src: "https://www.hackwestern.com/#about",
+  href: "https://www.hackwestern.com/#about",
+};
+
+const RESUME = {
+  kind: "site",
+  label: "Resume",
+  src: "https://drive.google.com/file/d/1U7dKCAM_Z0UPll5qTfGnNhBpXXAlNV2v/preview",
+  href: "https://drive.google.com/file/d/1U7dKCAM_Z0UPll5qTfGnNhBpXXAlNV2v/view?usp=sharing",
+} satisfies Preview;
+
+const TECH_EVENTS: Preview = {
+  kind: "photos",
+  label: "Tech events",
+  images: [
+    { src: "/tech-events-1.webp", alt: "Organizing team at Founders Cafe" },
+    { src: "/tech-events-2.webp", alt: "Audience at a founder talk" },
+  ],
+};
+
+const WESTERN: Preview = {
+  kind: "photos",
+  label: "Western University",
+  images: [{ src: "/western.webp", alt: "University College tower at sunset" }],
+};
+
+const IVEY: Preview = {
+  kind: "photos",
+  label: "Ivey Business School",
+  images: [{ src: "/ivey.jpg", alt: "Ivey HBA class photo in the atrium" }],
+};
+
+// Highlighted phrase that opens a preview when clicked.
+// data-cursor-plain keeps the custom cursor from growing over it.
+function PreviewHighlight({
+  onOpen,
+  children,
+}: {
+  onOpen: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <mark
+      className="about-highlight about-highlight-link"
+      role="button"
+      tabIndex={0}
+      data-cursor-plain
+      onClick={onOpen}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpen();
+        }
+      }}
+    >
+      {children}
+    </mark>
+  );
+}
 
 // Dictionary-style intro, modeled on a search-result definition card.
 // Intro animation: type the name, pause, type "(noun)", then fade in the rest
@@ -103,6 +172,27 @@ export default function About() {
     }, 150);
   };
 
+  // Site/file preview (iframe modal)
+  const [preview, setPreview] = useState<Preview | null>(null);
+  const previewOpen = preview !== null;
+  const closePreview = () => setPreview(null);
+
+  useEffect(() => {
+    if (!previewOpen) return;
+    // Use the native cursor inside the modal; the custom one can't follow into the iframe
+    setCursorHidden(true);
+    document.documentElement.dataset.preview = "open";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPreview(null);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      delete document.documentElement.dataset.preview;
+      setCursorHidden(false);
+    };
+  }, [previewOpen]);
+
   return (
     <div
       style={{
@@ -134,6 +224,53 @@ export default function About() {
           }}
         >
           {contactLinks[hoveredLink].icon}
+        </div>
+      )}
+      {preview && (
+        <div className="site-preview-backdrop" onClick={closePreview}>
+          <div
+            className="site-preview"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${preview.label} preview`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="site-preview-bar">
+              <span className="site-preview-url">{preview.label}</span>
+              {preview.kind === "site" && (
+                <a
+                  href={preview.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="site-preview-action"
+                >
+                  Open ↗
+                </a>
+              )}
+              <button
+                type="button"
+                className="site-preview-action"
+                onClick={closePreview}
+                aria-label="Close preview"
+              >
+                ✕
+              </button>
+            </div>
+            {preview.kind === "site" ? (
+              <iframe
+                src={preview.src}
+                title={preview.label}
+                className="site-preview-frame"
+              />
+            ) : (
+              <div className="photo-preview">
+                {preview.images.map((img) => (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img key={img.src} src={img.src} alt={img.alt} />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
       <div className="about-mobile-layout">
@@ -210,23 +347,40 @@ export default function About() {
             className="about-definition"
           >
             <strong>1.</strong>{" "}
-            <mark className="about-highlight">
-              Dual degree CS &amp; Business
-            </mark>{" "}
-            student at Western University &amp; Ivey Business School.
+            Dual degree CS &amp; Business student at{" "}
+            <PreviewHighlight onOpen={() => setPreview(WESTERN)}>
+              Western University
+            </PreviewHighlight>{" "}
+            &amp;{" "}
+            <PreviewHighlight onOpen={() => setPreview(IVEY)}>
+              Ivey Business School
+            </PreviewHighlight>
+            .
             <br />
             <strong>2.</strong> Passionate about{" "}
-            <mark className="about-highlight">building cool software</mark> and
+            building cool software and
             impactful products.
             <br />
             <strong>3.</strong> Currently organizing{" "}
-            <mark className="about-highlight">Hack Western</mark>, running tech
-            events, shooting hoops.{" "}
+            <PreviewHighlight onOpen={() => setPreview(HACK_WESTERN)}>
+              Hack Western
+            </PreviewHighlight>
+            , running{" "}
+            <PreviewHighlight onOpen={() => setPreview(TECH_EVENTS)}>
+              tech events
+            </PreviewHighlight>
+            , shooting hoops.{" "}
             <a
-              href="https://drive.google.com/file/d/1U7dKCAM_Z0UPll5qTfGnNhBpXXAlNV2v/view?usp=sharing"
+              href={RESUME.href}
               target="_blank"
               rel="noopener noreferrer"
               className="about-source"
+              onClick={(e) => {
+                // Plain click previews; cmd/ctrl-click still opens a new tab
+                if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+                e.preventDefault();
+                setPreview(RESUME);
+              }}
               data-cursor-plain
             >
               <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
