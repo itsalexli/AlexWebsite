@@ -5,6 +5,7 @@ import CustomCursor from "@/components/CustomCursor";
 import { GRAIN, IBM_TINT } from "@/components/coverEffects";
 import styles from "../agely/agely.module.css";
 import ibm from "./ibm.module.css";
+import diagram from "@/components/diagram.module.css";
 
 const tools = [
   "React + TypeScript",
@@ -144,55 +145,55 @@ export default function IbmPage() {
           </p>
 
           {/* Simplified, high-level architecture */}
-          <div className={ibm.diagram} role="img" aria-label="Simplified architecture diagram">
-            <div className={ibm.tier}>
-              <p className={ibm.tierLabel}>Team&apos;s app + chat SDK</p>
-              <div className={ibm.row}>
-                <div className={ibm.box}>Fan chat</div>
-                <div className={ibm.box}>Moderator console</div>
-                <div className={ibm.box}>Admin tools</div>
+          <div className={diagram.diagram} role="img" aria-label="Simplified architecture diagram">
+            <div className={diagram.tier}>
+              <p className={diagram.tierLabel}>Team&apos;s app + chat SDK</p>
+              <div className={diagram.row}>
+                <div className={diagram.box}>Fan chat</div>
+                <div className={diagram.box}>Moderator console</div>
+                <div className={diagram.box}>Admin tools</div>
               </div>
             </div>
 
-            <div className={ibm.links}>
+            <div className={diagram.links}>
               <span>↓ HTTP</span>
               <span>↓ WebSocket</span>
             </div>
 
-            <div className={ibm.row}>
-              <div className={ibm.box}>
+            <div className={diagram.row}>
+              <div className={diagram.box}>
                 Chat API
-                <span className={ibm.boxSub}>rooms, promos, word lists, bans</span>
+                <span className={diagram.boxSub}>rooms, promos, word lists, bans</span>
               </div>
-              <div className={ibm.box}>
+              <div className={diagram.box}>
                 Realtime gateway
-                <span className={ibm.boxSub}>live messages, mod actions</span>
+                <span className={diagram.boxSub}>live messages, mod actions</span>
               </div>
             </div>
 
-            <div className={ibm.links}>
+            <div className={diagram.links}>
               <span>↓ jobs</span>
             </div>
 
-            <div className={ibm.row}>
-              <div className={`${ibm.box} ${ibm.boxAccent}`}>
+            <div className={diagram.row}>
+              <div className={`${diagram.box} ${diagram.boxAccent}`}>
                 Moderation workers
-                <span className={ibm.boxSub}>filters → AI models → decision</span>
+                <span className={diagram.boxSub}>filters → AI models → decision</span>
               </div>
             </div>
 
-            <div className={ibm.links}>
+            <div className={diagram.links}>
               <span>↓</span>
             </div>
 
-            <div className={ibm.row}>
-              <div className={ibm.box}>
+            <div className={diagram.row}>
+              <div className={diagram.box}>
                 Redis
-                <span className={ibm.boxSub}>pub/sub, cache, queues</span>
+                <span className={diagram.boxSub}>pub/sub, cache, queues</span>
               </div>
-              <div className={ibm.box}>
+              <div className={diagram.box}>
                 PostgreSQL
-                <span className={ibm.boxSub}>rooms, messages, audit logs</span>
+                <span className={diagram.boxSub}>rooms, messages, audit logs</span>
               </div>
             </div>
           </div>

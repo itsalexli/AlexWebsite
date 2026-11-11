@@ -34,7 +34,7 @@ export default function Projects() {
       year: "2025",
       description: "Open-source notation coding agent and interface",
       image: "/VibeCompose.jpg", // Using available images
-      link: "https://github.com/itsalexli/vibecompoz",
+      link: "/vibecompose",
     },
     {
       id: 6,
@@ -45,7 +45,7 @@ export default function Projects() {
       image: "/wundr-poster.webp",
       // Looping animation; the image above shows while it loads
       video: "/wundr-hero-loop.mp4",
-      link: "https://www.jiayihong.ca/wundr-case-study.html",
+      link: "/wundr",
     },
     {
       id: 2,
