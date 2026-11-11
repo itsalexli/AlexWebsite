@@ -200,13 +200,141 @@ body::after {
 }
 
 /* Clickable highlight (opens a site preview) */
+/* A faint underline sits under the text; on hover a solid one sweeps in
+   from the left (and back out to the right on leave) */
 .about-highlight-link {
-  transition: background-color 0.15s ease;
+  background-image: linear-gradient(currentColor, currentColor),
+    linear-gradient(rgba(232, 234, 237, 0.22), rgba(232, 234, 237, 0.22));
+  background-size: 0 1px, 100% 1px;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s cubic-bezier(0.65, 0, 0.35, 1),
+    background-color 0.15s ease;
 }
 .about-highlight-link:hover,
-.about-highlight-link:focus-visible {
-  background-color: rgba(88, 120, 230, 0.4);
+.about-highlight-link:focus-visible,
+.about-highlight-link[data-open] {
+  background-size: 100% 1px, 100% 1px;
+  background-position: 0 100%, 0 100%;
   outline: none;
+}
+
+/* Hover card above a highlight: springs up out of a blur, follows the
+   mouse sideways and leans with its movement */
+.hover-card {
+  position: fixed;
+  z-index: 9000;
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(4px);
+  transform: translateX(-50%) translateY(8px) scale(0.92);
+  transform-origin: 50% 100%;
+  transition: opacity 0.16s, filter 0.22s,
+    transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
+    left 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hover-card[data-placement="below"] {
+  transform: translateX(-50%) translateY(-8px) scale(0.92);
+  transform-origin: 50% 0;
+}
+.hover-card[data-open] {
+  opacity: 1;
+  filter: none;
+  transform: translateX(-50%);
+}
+.hover-card-inner {
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(32, 33, 36, 0.95);
+  backdrop-filter: blur(12px);
+  padding: 6px;
+  box-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.5);
+  transform: rotate(var(--lean, 0deg));
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hover-card-shot-wrap {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+}
+.hover-card-shot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.hover-card-shot[data-loaded] {
+  opacity: 1;
+}
+/* Slowly pan down the image while the card is open */
+.hover-card[data-open] .hover-card-shot {
+  object-position: 50% 100%;
+  transition: opacity 0.3s,
+    object-position 7s cubic-bezier(0.45, 0, 0.55, 1) 0.7s;
+}
+.hover-card-footer {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 6px 2px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+}
+.hover-card-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: #e8eaed;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hover-card-favicon {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.hover-card-arrow {
+  flex-shrink: 0;
+  color: #9aa0a6;
+  transform: translate(-3px, 3px);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s;
+}
+.hover-card[data-open] .hover-card-arrow {
+  transform: none;
+}
+/* No hover on touch screens, so no hover cards */
+@media (hover: none) {
+  .hover-card {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-highlight-link,
+  .hover-card,
+  .hover-card-inner,
+  .hover-card-arrow {
+    transition-duration: 0s !important;
+  }
+  .hover-card,
+  .hover-card[data-placement="below"] {
+    filter: none;
+    transform: translateX(-50%);
+  }
+  .hover-card[data-open] .hover-card-shot {
+    transition: opacity 0.3s;
+  }
 }
 
 /* Site preview modal */

@@ -19,7 +19,7 @@ type Experience = {
 const experiences: Experience[] = [
   {
     company: "IBM",
-    role: "AI Engineer Intern",
+    role: "AI Software Engineer Intern",
     url: "https://www.ibm.com",
     logo: "/ibm-tile.png",
     tileColor: "#ffffff",

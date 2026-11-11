@@ -2,11 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-
-// Tileable noise texture for a film-grain overlay
-const GRAIN = `url("data:image/svg+xml,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>'
-)}")`;
+import { GRAIN, IBM_TINT } from "@/components/coverEffects";
 
 export default function Projects() {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
@@ -20,12 +16,9 @@ export default function Projects() {
       // No poster frame yet; the video plays as soon as it loads
       image: "",
       video: "/ibm-hype.mp4",
-      // The video is a white logo on a dark background; it's screen-blended
-      // over this gradient so the dark parts take on IBM blue/purple
-      tint:
-        "radial-gradient(circle at 20% 15%, #4589ff 0%, transparent 55%), radial-gradient(circle at 85% 90%, #a56eff 0%, transparent 55%), linear-gradient(135deg, #0f2a7a, #2a1460)",
+      tint: IBM_TINT,
       grain: true,
-      link: "https://www.ibm.com/",
+      link: "/ibm",
     },
     {
       id: 1,

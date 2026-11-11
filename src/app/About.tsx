@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import React, { useEffect, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import {
   GitHubIcon,
   LinkedInIcon,
@@ -25,8 +26,9 @@ const setCursorHidden = (hidden: boolean) =>
 
 // Things that open in the preview modal: either an embedded site/file
 // (`src` is embedded, `href` opens in a new tab) or a set of photos
+// `thumb` is the image shown in the hover card for sites
 type Preview =
-  | { kind: "site"; label: string; src: string; href: string }
+  | { kind: "site"; label: string; src: string; href: string; thumb?: string }
   | { kind: "photos"; label: string; images: { src: string; alt: string }[] };
 
 const HACK_WESTERN: Preview = {
@@ -34,6 +36,8 @@ const HACK_WESTERN: Preview = {
   label: "hackwestern.com",
   src: "https://www.hackwestern.com/#about",
   href: "https://www.hackwestern.com/#about",
+  // Tall screenshot that slowly scrolls while the hover card is open
+  thumb: "/hackwestern-preview.jpg",
 };
 
 const RESUME = {
@@ -41,6 +45,9 @@ const RESUME = {
   label: "Resume",
   src: "https://drive.google.com/file/d/1U7dKCAM_Z0UPll5qTfGnNhBpXXAlNV2v/preview",
   href: "https://drive.google.com/file/d/1U7dKCAM_Z0UPll5qTfGnNhBpXXAlNV2v/view?usp=sharing",
+  // Saved copy of Drive's thumbnail of the PDF (Drive won't serve it to
+  // other sites); re-save it when the resume changes
+  thumb: "/resume-preview.jpg",
 } satisfies Preview;
 
 const TECH_EVENTS: Preview = {
@@ -64,31 +71,218 @@ const IVEY: Preview = {
   images: [{ src: "/ivey.jpg", alt: "Ivey HBA class photo in the atrium" }],
 };
 
-// Highlighted phrase that opens a preview when clicked.
+const CARD_WIDTH = 288;
+
+const previewThumb = (p: Preview) =>
+  p.kind === "photos" ? p.images[0].src : p.thumb;
+
+const previewFavicon = (p: Preview) =>
+  p.kind === "site"
+    ? `https://www.google.com/s2/favicons?domain=${new URL(p.href).hostname}&sz=64`
+    : null;
+
+// Hover card shared by the highlights and the resume chip: on hover a small
+// card with a thumbnail floats above the element, following the mouse
+// sideways and leaning with its movement. Spread `handlers` onto the element,
+// attach `ref`, and render `card` next to it.
+function useHoverCard<T extends HTMLElement>(preview: Preview) {
+  const ref = useRef<T>(null);
+  const [mounted, setMounted] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [pos, setPos] = useState({ x: 0, y: 0, below: false });
+  const [lean, setLean] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+  const lastX = useRef<number | null>(null);
+  const leanTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => {
+      if (leanTimer.current) clearTimeout(leanTimer.current);
+    };
+  }, []);
+
+  const place = (mouseX: number) => {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    const half = CARD_WIDTH / 2 + 8;
+    const x = Math.min(Math.max(mouseX, half), window.innerWidth - half);
+    // Flip below the text when there's no room above
+    const below = r.top < 240;
+    setPos({ x, y: below ? r.bottom + 8 : r.top - 8, below });
+  };
+
+  const handlers = {
+    onMouseEnter: (e: React.MouseEvent) => {
+      lastX.current = e.clientX;
+      place(e.clientX);
+      setOpen(true);
+    },
+    onMouseMove: (e: React.MouseEvent) => {
+      place(e.clientX);
+      if (lastX.current !== null) {
+        const dx = e.clientX - lastX.current;
+        setLean(Math.max(-6, Math.min(6, dx * 0.4)));
+        if (leanTimer.current) clearTimeout(leanTimer.current);
+        leanTimer.current = setTimeout(() => setLean(0), 120);
+      }
+      lastX.current = e.clientX;
+    },
+    onMouseLeave: () => {
+      setOpen(false);
+      setLean(0);
+      lastX.current = null;
+    },
+  };
+
+  const thumb = previewThumb(preview);
+  const favicon = previewFavicon(preview);
+
+  const card =
+    mounted &&
+    createPortal(
+      <div
+        role="tooltip"
+        aria-hidden={!open}
+        className="hover-card"
+        data-open={open || undefined}
+        data-placement={pos.below ? "below" : "above"}
+        style={{
+          width: CARD_WIDTH,
+          left: pos.x,
+          ...(pos.below
+            ? { top: pos.y }
+            : { bottom: window.innerHeight - pos.y }),
+        }}
+      >
+        <div
+          className="hover-card-inner"
+          style={{ "--lean": `${lean}deg` } as React.CSSProperties}
+        >
+          <div className="hover-card-shot-wrap">
+            {thumb && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={thumb}
+                alt=""
+                className="hover-card-shot"
+                data-loaded={loaded || undefined}
+                onLoad={() => setLoaded(true)}
+              />
+            )}
+          </div>
+          <div className="hover-card-footer">
+            <span className="hover-card-label">
+              {favicon && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={favicon} alt="" className="hover-card-favicon" />
+              )}
+              <span>{preview.label}</span>
+            </span>
+            <svg
+              className="hover-card-arrow"
+              width="14"
+              height="14"
+              viewBox="0 0 15 15"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 11L11 4M11 4H6M11 4V9"
+                stroke="currentColor"
+                strokeWidth="1.1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>,
+      document.body
+    );
+
+  return { ref, open, close: () => setOpen(false), handlers, card };
+}
+
+// Highlighted phrase that opens a preview when clicked, with an underline
+// sweep and hover card on hover.
 // data-cursor-plain keeps the custom cursor from growing over it.
 function PreviewHighlight({
+  preview,
   onOpen,
   children,
 }: {
+  preview: Preview;
   onOpen: () => void;
   children: ReactNode;
 }) {
+  const { ref, open, close, handlers, card } = useHoverCard<HTMLElement>(preview);
+
   return (
-    <mark
-      className="about-highlight about-highlight-link"
-      role="button"
-      tabIndex={0}
-      data-cursor-plain
-      onClick={onOpen}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
+    <>
+      <mark
+        ref={ref}
+        className="about-highlight about-highlight-link"
+        role="button"
+        tabIndex={0}
+        data-cursor-plain
+        data-open={open || undefined}
+        onClick={() => {
+          close();
           onOpen();
-        }
-      }}
-    >
-      {children}
-    </mark>
+        }}
+        {...handlers}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onOpen();
+          }
+        }}
+      >
+        {children}
+      </mark>
+      {card}
+    </>
+  );
+}
+
+// The "Resume +2" chip: previews the resume on click, with a hover card.
+// Cmd/ctrl/shift-click still opens it in a new tab.
+function ResumeChip({ onOpen }: { onOpen: () => void }) {
+  const { ref, close, handlers, card } = useHoverCard<HTMLAnchorElement>(RESUME);
+
+  return (
+    <>
+      <a
+        ref={ref}
+        href={RESUME.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="about-source"
+        data-cursor-plain
+        {...handlers}
+        onClick={(e) => {
+          if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+          e.preventDefault();
+          close();
+          onOpen();
+        }}
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+          <circle cx="8" cy="8" r="8" fill="#81c995" />
+          <path
+            d="M4.5 8.2l2.3 2.3 4.7-4.9"
+            fill="none"
+            stroke="#0d3b1e"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        Resume +2
+      </a>
+      {card}
+    </>
   );
 }
 
@@ -348,11 +542,17 @@ export default function About() {
           >
             <strong>1.</strong>{" "}
             Dual degree CS &amp; Business student at{" "}
-            <PreviewHighlight onOpen={() => setPreview(WESTERN)}>
+            <PreviewHighlight
+              preview={WESTERN}
+              onOpen={() => setPreview(WESTERN)}
+            >
               Western University
             </PreviewHighlight>{" "}
             &amp;{" "}
-            <PreviewHighlight onOpen={() => setPreview(IVEY)}>
+            <PreviewHighlight
+              preview={IVEY}
+              onOpen={() => setPreview(IVEY)}
+            >
               Ivey Business School
             </PreviewHighlight>
             .
@@ -362,40 +562,21 @@ export default function About() {
             impactful products.
             <br />
             <strong>3.</strong> Currently organizing{" "}
-            <PreviewHighlight onOpen={() => setPreview(HACK_WESTERN)}>
+            <PreviewHighlight
+              preview={HACK_WESTERN}
+              onOpen={() => setPreview(HACK_WESTERN)}
+            >
               Hack Western
             </PreviewHighlight>
             , running{" "}
-            <PreviewHighlight onOpen={() => setPreview(TECH_EVENTS)}>
+            <PreviewHighlight
+              preview={TECH_EVENTS}
+              onOpen={() => setPreview(TECH_EVENTS)}
+            >
               tech events
             </PreviewHighlight>
             , shooting hoops.{" "}
-            <a
-              href={RESUME.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="about-source"
-              onClick={(e) => {
-                // Plain click previews; cmd/ctrl-click still opens a new tab
-                if (e.metaKey || e.ctrlKey || e.shiftKey) return;
-                e.preventDefault();
-                setPreview(RESUME);
-              }}
-              data-cursor-plain
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                <circle cx="8" cy="8" r="8" fill="#81c995" />
-                <path
-                  d="M4.5 8.2l2.3 2.3 4.7-4.9"
-                  fill="none"
-                  stroke="#0d3b1e"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              Resume +2
-            </a>
+            <ResumeChip onOpen={() => setPreview(RESUME)} />
           </p>
 
         </div>

@@ -23,6 +23,10 @@ const pillars = [
     body: "It reads the page as it is, so the website itself never has to change.",
   },
   {
+    title: "Simplify page",
+    body: "One button turns a cluttered page into a clean, plain-language summary with clear headings and short lists.",
+  },
+  {
     title: "Built for seniors",
     body: "Large targets, short steps and a calm interface for people with lower digital literacy.",
   },
@@ -45,7 +49,7 @@ export default function AgelyPage() {
 
         <div className={styles.titleBlock}>
           <h1 className={styles.title}>Agely</h1>
-          <p className={styles.subtitle}>Hackathon, 2025</p>
+          <p className={styles.subtitle}>Startup pitch, 2025</p>
         </div>
 
         <div className={styles.hero}>
@@ -56,7 +60,7 @@ export default function AgelyPage() {
         <div className={styles.meta}>
           <div>
             <h3 className={styles.metaLabel}>Event</h3>
-            <p className={styles.metaText}>SpurHacks 2025</p>
+            <p className={styles.metaText}>SpurHacks 2025, Startup Track</p>
 
             <h3 className={styles.metaLabel}>Tools</h3>
             <ul className={styles.metaList}>
@@ -72,7 +76,7 @@ export default function AgelyPage() {
               highlights exactly where to click.
             </p>
             <p className={styles.metaText}>
-              Won 1st Place AI and Best Startup Speakers in the Startup Track ($4,500).
+              Won 1st Place AI and Best Startup Speakers, with a $4,500 grant to keep building.
             </p>
 
             <h3 className={styles.metaLabel}>Team</h3>
@@ -80,6 +84,9 @@ export default function AgelyPage() {
               <li>Jason Deng</li>
               <li>Alex Li</li>
             </ul>
+            <p className={styles.metaText} style={{ marginTop: 6 }}>
+              Two of us, where most teams had four.
+            </p>
           </div>
         </div>
 
@@ -118,6 +125,24 @@ export default function AgelyPage() {
           <div className={styles.figure}>
             <Image src="/Agely1.png" alt="Agely popup with a text box and microphone button" fill style={{ objectFit: "cover" }} />
           </div>
+
+          <h3 className={styles.subheading}>Simplify page</h3>
+          <p className={styles.body}>
+            Some pages are hard to read even when you know where to click. The{" "}
+            <strong>Simplify page</strong> button rewrites a dense page, like an insurance product
+            page, into a <strong>short, plain-language version</strong> with clear headings and bullet
+            points.
+          </p>
+          <div className={styles.videoCrop}>
+            <video
+              src="/agely-simplify.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              aria-label="Agely simplifying a dense insurance web page into a plain-language summary"
+            />
+          </div>
         </section>
 
         <section id="challenges" className={styles.section}>
@@ -133,14 +158,29 @@ export default function AgelyPage() {
         <section id="results" className={styles.section}>
           <h2 className={styles.sectionTitle}>Results</h2>
           <p className={styles.body}>
-            We built a working accessibility tool in a weekend and took home{" "}
-            <strong>1st Place AI</strong> and <strong>Best Startup Speakers</strong> in the SpurHacks Startup
-            Track.
+            The SpurHacks Startup Track works less like a typical hackathon and more like a{" "}
+            <strong>startup incubator pitch</strong>: you build a product and pitch it as a business.
+            Teams usually have four people. <strong>We did it with two</strong>, and took home{" "}
+            <strong>1st Place AI</strong> and <strong>Best Startup Speakers</strong>, along with a{" "}
+            <strong>$4,500 grant</strong> to keep building.
           </p>
           <p className={styles.body}>
-            Next, we want to support more sites and UI patterns, improve detection speed and accuracy, add
-            voice prompts and larger highlights, and grow Agely into a broader accessibility toolkit for seniors.
+            And we did keep building. Since the pitch we&apos;ve added features like Simplify page, and
+            we&apos;re working on supporting more sites, faster and more accurate detection, voice
+            prompts and larger highlights, to grow Agely into a broader accessibility toolkit for
+            seniors.
           </p>
+
+          <figure className={styles.photo}>
+            <Image
+              src="/agely-spur.webp"
+              alt="Jason and Alex at the Spur Innovation Centre holding a SpurHacks card"
+              width={1394}
+              height={1858}
+              style={{ width: "100%", height: "auto" }}
+            />
+            <figcaption>Jason and me at the Spur Innovation Centre.</figcaption>
+          </figure>
         </section>
 
         <footer className={styles.footer}>
