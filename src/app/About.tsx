@@ -481,7 +481,20 @@ export default function About() {
           >
             {/* Typed part is visible; the rest is invisible so the layout never jumps */}
             <span className={typing ? "type-caret" : undefined}>
-              {renderName(NAME.slice(0, nameCount))}
+              {/* Hovering the name glows it and pops out a photo */}
+              <span
+                className="name-hover"
+                data-ready={nameCount >= NAME.length || undefined}
+                data-cursor-plain
+              >
+                {renderName(NAME.slice(0, nameCount))}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/alex-pisa.jpg"
+                  alt="Alex holding an empty ice cream cone in front of the Leaning Tower of Pisa"
+                  className="name-photo"
+                />
+              </span>
               {nameCount >= NAME.length && (
                 <>
                   {" "}
