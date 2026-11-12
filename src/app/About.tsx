@@ -71,7 +71,15 @@ const IVEY: Preview = {
   images: [{ src: "/ivey.jpg", alt: "Ivey HBA class photo in the atrium" }],
 };
 
+const HOOPS: Preview = {
+  kind: "photos",
+  label: "Shooting hoops",
+  images: [{ src: "/hoops.jpg", alt: "Alex going up for a layup in a high school game" }],
+};
+
 const CARD_WIDTH = 288;
+// Photo previews pop out as a framed, tilted photo like the one on the name
+const PHOTO_WIDTH = 240;
 
 const previewThumb = (p: Preview) =>
   p.kind === "photos" ? p.images[0].src : p.thumb;
@@ -93,6 +101,7 @@ function useHoverCard<T extends HTMLElement>(preview: Preview) {
   const [lean, setLean] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const lastX = useRef<number | null>(null);
+  const isPhoto = preview.kind === "photos";
   const leanTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -105,7 +114,7 @@ function useHoverCard<T extends HTMLElement>(preview: Preview) {
   const place = (mouseX: number) => {
     const r = ref.current?.getBoundingClientRect();
     if (!r) return;
-    const half = CARD_WIDTH / 2 + 8;
+    const half = (isPhoto ? PHOTO_WIDTH : CARD_WIDTH) / 2 + 16;
     const x = Math.min(Math.max(mouseX, half), window.innerWidth - half);
     // Flip below the text when there's no room above
     const below = r.top < 240;
@@ -138,8 +147,40 @@ function useHoverCard<T extends HTMLElement>(preview: Preview) {
   const thumb = previewThumb(preview);
   const favicon = previewFavicon(preview);
 
-  const card =
+  // Only read `window` once mounted (it doesn't exist during server render)
+  const position = mounted
+    ? {
+        left: pos.x,
+        ...(pos.below ? { top: pos.y } : { bottom: window.innerHeight - pos.y }),
+      }
+    : {};
+
+  const photoCard =
     mounted &&
+    isPhoto &&
+    createPortal(
+      <div
+        role="tooltip"
+        aria-hidden={!open}
+        className="hover-photo"
+        data-open={open || undefined}
+        data-placement={pos.below ? "below" : "above"}
+        style={{ width: PHOTO_WIDTH, ...position }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={thumb}
+          alt=""
+          className="hover-photo-img"
+          style={{ "--lean": `${lean}deg` } as React.CSSProperties}
+        />
+      </div>,
+      document.body
+    );
+
+  const card =
+    photoCard ||
+    (mounted &&
     createPortal(
       <div
         role="tooltip"
@@ -199,7 +240,7 @@ function useHoverCard<T extends HTMLElement>(preview: Preview) {
         </div>
       </div>,
       document.body
-    );
+    ));
 
   return { ref, open, close: () => setOpen(false), handlers, card };
 }
@@ -588,7 +629,11 @@ export default function About() {
             >
               tech events
             </PreviewHighlight>
-            , shooting hoops.{" "}
+            ,{" "}
+            <PreviewHighlight preview={HOOPS} onOpen={() => setPreview(HOOPS)}>
+              shooting hoops
+            </PreviewHighlight>
+            .{" "}
             <ResumeChip onOpen={() => setPreview(RESUME)} />
           </p>
 
