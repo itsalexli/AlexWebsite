@@ -66,7 +66,7 @@ export default function IbmPage() {
 
         <div className={styles.titleBlock}>
           <h1 className={styles.title}>IBM</h1>
-          <p className={styles.subtitle}>AI Software Engineer Intern, 2026</p>
+          <p className={styles.subtitle}>AI Product Engineer Intern, 2026</p>
         </div>
 
         <div className={styles.hero} style={{ background: IBM_TINT }}>
@@ -86,7 +86,7 @@ export default function IbmPage() {
         <div className={styles.meta}>
           <div>
             <h3 className={styles.metaLabel}>Role</h3>
-            <p className={styles.metaText}>AI Software Engineer Intern, Toronto</p>
+            <p className={styles.metaText}>AI Product Engineer Intern, Toronto</p>
 
             <h3 className={styles.metaLabel}>Team</h3>
             <p className={styles.metaText}>A lean team of 3 engineers</p>
