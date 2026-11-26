@@ -104,7 +104,7 @@ export default function AgelyPage() {
 
         <div className={styles.titleBlock}>
           <h1 className={styles.title}>Agely</h1>
-          <p className={styles.subtitle}>Startup pitch, 2025</p>
+          <p className={styles.subtitle}>Startup project, 2025</p>
         </div>
 
         <div className={styles.hero}>

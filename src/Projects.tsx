@@ -21,6 +21,16 @@ export default function Projects() {
       link: "/ibm",
     },
     {
+      id: 8,
+      title: "Colalex",
+      year: "2026",
+      description: "HackerRank-style 3D modelling and spatial design assessments",
+      image: "/colalex-poster.jpg",
+      // Looping clip of a bolt being built; the image above shows while it loads
+      video: "/colalex-hero.mp4",
+      link: "/colalex",
+    },
+    {
       id: 1,
       title: "Agely",
       year: "2025",
